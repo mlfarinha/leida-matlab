@@ -36,8 +36,6 @@ Conditions_tag = {'PRE_PCB','POST_PCB','PRE_DMT','POST_DMT'};
 Parcellation = 'AAL116';
 % Number of brain areas to consider for analysis;
 N_areas = 90;
-% Direction to plot the FC states/brain ('SideView' or 'TopView'):
-CortexDirection = 'SideView';
 % TR corresponding to the fMRI data:
 TR = 2;
 % Maximum number of TRs for all fMRI sessions:
@@ -51,12 +49,14 @@ fhi = 0.01;
 % Experimental paradigm (0: subjects in different conditions are not the
 % same; 1: subjects are the same across conditions)
 Paired_tests = 0;
+% Direction to plot the FC states/brain ('SideView' or 'TopView'):
+CortexDirection = 'SideView';
 
 % AFTER FILLING IN THE INPUT PARAMETERS AND ADDING LEiDA_Function FOLDER TO
 % YOUR MATLAB PATH:
 % ||||||||||||||||||||||||||||||| CLICK RUN |||||||||||||||||||||||||||||||
 
-%% RUN LEIDING EIGENVECTOR DYNAMICS ANALYSIS
+%% B: RUN LEIDING EIGENVECTOR DYNAMICS ANALYSIS
 
 % Go to the directory containing the LEiDA functions
 cd(LEiDA_directory)

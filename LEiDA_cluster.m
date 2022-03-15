@@ -31,14 +31,14 @@ rangeK = mink : maxk;
 Kmeans_results = cell(size(rangeK));
 
 % Number of new initial cluster centroid positions to run
-replicates = 150;
+replicates = 500;
 
 disp('Clustering eigenvectors into:')
 
 % For each K do:
 for K = 1:length(rangeK)
     disp(['- ' num2str(rangeK(K)) ' FC states'])
-    [IDX, C, SUMD, D] = kmeans(V1_all,rangeK(K),'Distance','Cosine','Replicates',replicates,'MaxIter',500,'OnlinePhase','off',...,
+    [IDX, C, SUMD, D] = kmeans(V1_all,rangeK(K),'Distance','Cosine','Replicates',replicates,'MaxIter',1000,'OnlinePhase','off',...,
                               'Display','off','Options',statset('UseParallel',0));
                          
     % ind_sort sorts the clusters in descending order of occupancy

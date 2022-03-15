@@ -24,7 +24,7 @@ function LEiDA_OptimalK
 %% A: USER INPUT PARAMETERS
 
 % Define optimal K value, i.e., optimal number of FC states:
-OptimalK = 10;
+OptimalK = 8;
 
 % Directory of the LEiDA toolbox folder:
 LEiDA_directory = 'D:\LEiDA_Toolbox\';
@@ -32,9 +32,6 @@ LEiDA_directory = 'D:\LEiDA_Toolbox\';
 Parcellation = 'AAL116';
 % Number of brain areas to consider for analysis;
 N_areas = 90;
-% Experimental paradigm (0: subjects in different conditions are not the
-% same; 1: subjects are the same across conditions)
-Paired_tests = 0;
 
 % AFTER FILLING IN THE INPUT PARAMETERS:
 % ||||||||||||||||||||||||||||||| CLICK RUN |||||||||||||||||||||||||||||||
@@ -58,9 +55,9 @@ OptK_dir = [leida_res num2str(OptimalK) 'FCstates\'];
 Plot_OptimalK(leida_res,OptK_dir,OptimalK,Parcellation,N_areas);
 
 % Compute the transition probability matrix and perform hypothesis tests
-LEiDA_stats_TransitionMatrix(leida_res,OptimalK,Paired_tests);
+LEiDA_stats_TransitionMatrix(leida_res,OptK_dir,OptimalK);
 
 % Plot the mean transition probability matrix and the differences in
 % state-to-state transition probabilities between conditions
-Plot_TransitionMatrix(leida_res,OptK_dir,OptimalK);
+Plot_TransitionMatrix(OptK_dir,OptimalK);
 

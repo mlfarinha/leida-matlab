@@ -1,4 +1,4 @@
-function LEiDA_stats_TransitionMatrix(data_dir,bestK,pair)
+function LEiDA_stats_TransitionMatrix(data_dir,save_dir,bestK)
 %
 % For the optimalK compute the transition matrix for each participant.
 % Perform hypothesis tests to check for differences in the state-to-state
@@ -6,9 +6,10 @@ function LEiDA_stats_TransitionMatrix(data_dir,bestK,pair)
 %
 % INPUT:
 % data_dir       directory where the LEiDA results are saved
+% save_dir       directory to save the results from the hypothesis tests
+%                of the comparison of the mean transition probabilities for
+%                the selected K
 % bestK          optimal K defined by the user
-% pair           0, different subjects in each condition (default); 1, same
-%                subjects across conditions
 %
 % OUTPUT:
 % TM             transition matrix for optimal K for all participants
@@ -24,9 +25,9 @@ function LEiDA_stats_TransitionMatrix(data_dir,bestK,pair)
 %         Miguel Farinha, ICVS/2CA-Braga, miguel.farinha@ccabraga.pt
 
 % Default number of permutations
-n_permutations = 500;
+n_permutations = 5000;
 % Default number of bootstrap samples within each permutation sample
-n_bootstraps = 10;
+n_bootstraps = 500;
 
 % File with leading eigenvectors (output from LEiDA_data.m)
 file_V1 = 'LEiDA_EigenVectors.mat';
@@ -38,7 +39,7 @@ file_P = 'LEiDA_Stats_FracOccup.mat';
 % Load required data:
 load([data_dir file_V1], 'Time_sessions');
 load([data_dir file_cluster], 'Kmeans_results', 'rangeK');
-load([data_dir file_P], 'cond', 'P', 'Index_Conditions');
+load([data_dir file_P], 'cond', 'P', 'Index_Conditions', 'pair');
 
 N_scans = max(Time_sessions);
 
@@ -120,7 +121,7 @@ end
 
 %%  PERMUTATION STATISTICS WITH WITHIN BOOTSTRAP SAMPLES
 
-disp('The hypothesis tests take a considerable amount of time to run')
+disp('The hypothesis tests take a considerable amount of time to run.')
 disp('Testing differences in transition probabilities:')
 
 % Store p-values and effect size
@@ -166,9 +167,9 @@ for c_out = 1:bestK
 end
 
 % Name of the file to save output
-save_file = ['LEiDA_Stats_TransitionMatrix_K' num2str(bestK) '.mat'];
+save_file = 'LEiDA_Stats_TransitionMatrix.mat';
 
-save([data_dir '/' save_file],'TM','TMnorm','TM_pval','TM_pval2sided','effectsize','levene_pval',...,
+save([save_dir '/' save_file],'TM','TMnorm','TM_pval','TM_pval2sided','effectsize','levene_pval',...,
                               'cond','rangeK','file_V1','file_cluster','file_P','Index_Conditions')
 
 disp(['Transition probability values and hypothesis tests results saved successfully as ' save_file])

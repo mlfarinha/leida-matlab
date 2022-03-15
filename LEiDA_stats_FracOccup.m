@@ -23,9 +23,9 @@ function LEiDA_stats_FracOccup(data_dir,cond,pair)
 %         Miguel Farinha, ICVS/2CA-Braga, miguel.farinha@ccabraga.pt
 
 % Default number of permutations
-n_permutations = 500;
+n_permutations = 5000;
 % Default number of bootstrap samples within each permutation sample
-n_bootstraps = 10;
+n_bootstraps = 500;
 
 % File with leading eigenvectors (output from LEiDA_data.m)
 file_V1 = 'LEiDA_EigenVectors.mat';
@@ -110,7 +110,7 @@ end
 
 %% PERMUTATION STATISTICS WITH WITHIN BOOTSTRAP SAMPLES
 
-disp('The hypothesis tests take a considerable amount of time to run')
+disp('The hypothesis tests take a considerable amount of time to run.')
 disp('Testing differences in fractional occupancy:')
 
 % Store p-values and effect size for K-means clustering solutions
@@ -158,6 +158,6 @@ save_file = 'LEiDA_Stats_FracOccup.mat';
 
 % Save K-means clustering solutions results:
 save([data_dir '/' save_file],'P','P_pval','P_pval2sided', 'effectsize', 'levene_pval',...,
-                              'cond','rangeK','file_cluster','file_V1','Index_Conditions')
+                              'cond','rangeK','file_cluster','file_V1','Index_Conditions','pair')
 
 disp(['Fractional occupancy values and hypothesis tests results saved successfully as ' save_file])

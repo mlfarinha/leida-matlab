@@ -1,4 +1,4 @@
-function Plot_TransitionMatrix(data_dir,save_dir,bestK)
+function Plot_TransitionMatrix(data_dir,bestK)
 %
 % Plot the results from the hypothesis tests obtained from comparing the
 % mean state-to-state transition probability between conditions
@@ -6,7 +6,6 @@ function Plot_TransitionMatrix(data_dir,save_dir,bestK)
 % INPUT:
 % data_dir      directory with the results from running the hypothesis
 %               tests on the state-to-state transition probabilities
-% save_dir      directory to save results for selected optimal K
 % bestK         optimal K defined by the user
 %
 % OUTPUT:
@@ -62,8 +61,8 @@ for i = 1:n_Cond
     ylabel('From FC State')
     xlabel('To FC State')
     
-    saveas(Fig1, fullfile(save_dir, ['OptK' num2str(bestK) '_TPM_' cond{i} '.png']),'png');
-    saveas(Fig1, fullfile(save_dir, ['OptK' num2str(bestK) '_TPM_' cond{i} '.fig']),'fig');
+    saveas(Fig1, fullfile(data_dir, ['OptK' num2str(bestK) '_TPM_' cond{i} '.png']),'png');
+    saveas(Fig1, fullfile(data_dir, ['OptK' num2str(bestK) '_TPM_' cond{i} '.fig']),'fig');
     disp(['- Mean transition probability matrix of condition ' cond{i} ' successfully saved as OptK' num2str(bestK) '_TPM_' cond{i}]);
 end
 
@@ -147,8 +146,8 @@ for s_ind = 1:length(subplot_indices)
     
     sgtitle([{'Two-sided {\itp}-value'},{'State-to-state transition probability'}],'Fontsize',14,'FontWeight','bold') 
 end
-saveas(Fig2, fullfile(save_dir, ['OptK' num2str(bestK) '_TransProbs_pvalues.png']),'png');
-saveas(Fig2, fullfile(save_dir, ['OptK' num2str(bestK) '_TransProbs_pvalues.fig']),'fig');
+saveas(Fig2, fullfile(data_dir, ['OptK' num2str(bestK) '_TransProbs_pvalues.png']),'png');
+saveas(Fig2, fullfile(data_dir, ['OptK' num2str(bestK) '_TransProbs_pvalues.fig']),'fig');
 disp('- Plot successfully saved as TransProbs_pvalues');
 
 close all;
