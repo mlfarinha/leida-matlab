@@ -1,11 +1,11 @@
-function LEiDA_Master
+function LEiDA_Start
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%            LEADING EIGENVECTOR DYNAMICS ANALYSIS            
+%                  LEADING EIGENVECTOR DYNAMICS ANALYSIS            
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
 % This function runs the first stage of the LEiDA analyses. It should be
-% used to select an optimal number of FC states to allow a further detailed
+% used to select the number of FC states appropriate for a more detailed
 % analysis. This function contains two sections: (A) user input parameters;
 % and (B) code to run LEiDA. The user should only need to adapt section A.
 %
@@ -20,28 +20,30 @@ function LEiDA_Master
 %    - Pyramid of FC states
 %
 % Tutorial: README.md
-% Version:  V1.0, March 2022
-% Authors:  Joana Cabral, Universidade do Minho, joanacabral@med.uminho.pt
+% Version:  V1.0, April 2022
+% Authors:  Joana Cabral, University of Minho, joanacabral@med.uminho.pt
 %           Miguel Farinha, ICVS/2CA-Braga, miguel.farinha@ccabraga.pt
 
 %% A: USER INPUT PARAMETERS
 
 % Directory of the LEiDA toolbox folder:
-LEiDA_directory = 'D:\LEiDA_Toolbox\';
+LEiDA_directory = 'D:/LEiDA_Toolbox/';
 % Directory of the folder with the parcellated neuroimaging data:
-Data_directory = 'D:\LEiDA_Toolbox\DMT_AAL116\DMT_AAL116\';
-% Tag of conditions given in the imaging files:
-Conditions_tag = {'PRE_PCB','POST_PCB','PRE_DMT','POST_DMT'};
-% Parcellation applied to the imaging data:
+Data_directory = 'D:/LEiDA_Toolbox/ABIDE_dparsf_all_aal116/';
+% Name of the run to be used to create the folder to save the data:
+run_name = 'ABIDE_dparsf_all_AAL116';
+% Tag of conditions given in the parcellated image files:
+Conditions_tag = {'Control','Autism'};
+% Parcellation applied to the imaging data (see tutorial):
 Parcellation = 'AAL116';
 % Number of brain areas to consider for analysis;
 N_areas = 90;
-% TR corresponding to the fMRI data:
-TR = 2;
+% Repetition time (TR) of the fMRI data (if unknown set to 1):
+TR = 1;
 % Maximum number of TRs for all fMRI sessions:
-Tmax = 240;
+Tmax = 315;
 % Apply temporal filtering to data (0: no; 1: yes)
-apply_filter = 1;
+apply_filter = 0;
 % Lowpass frequency of filter (default 0.1):
 flp = 0.1;
 % Highpass frequency of filter (default 0.01):
@@ -61,9 +63,11 @@ CortexDirection = 'SideView';
 % Go to the directory containing the LEiDA functions
 cd(LEiDA_directory)
 
-% Create a directory to store the results from LEiDA
-mkdir('LEiDA_Results\');
-leida_res = [LEiDA_directory '\LEiDA_Results\'];
+% Create a directory to store the results from the current LEiDA run
+if ~exist([LEiDA_directory 'LEiDA_Results_' run_name '/'], 'dir')
+    mkdir([LEiDA_directory 'LEiDA_Results_' run_name '/']);
+end
+leida_res = [LEiDA_directory 'LEiDA_Results_' run_name '/'];
 
 % Compute the leading eigenvectors of the data
 LEiDA_data(Data_directory,leida_res,N_areas,Tmax,apply_filter,flp,fhi,TR);
@@ -74,20 +78,14 @@ LEiDA_cluster(leida_res);
 % Compute the fractional occupancy and perform hypothesis tests
 LEiDA_stats_FracOccup(leida_res,Conditions_tag,Paired_tests);
 
-% Generate and save the p-value and barplot plots for fractional occupancy
-Plot_FracOccup(leida_res)
-
-% Close all figures to start analysis of Dwell Time
-close all;
-
 % Compute the dwell time and perform hypothesis tests
 LEiDA_stats_DwellTime(leida_res,Conditions_tag,Paired_tests,TR);
 
+% Generate and save the p-value and barplot plots for fractional occupancy
+Plot_FracOccup(leida_res)
+
 % Generate and save the p-value and barplot plots for dwell time
 Plot_DwellTime(leida_res)
-
-% Close all figures to plot the centroids obtained using LEiDA
-close all;
 
 % Plot the centroids obtained using LEiDA and their overlap with Yeo nets
 Plot_Centroid_Pyramid(leida_res,Conditions_tag,Parcellation,N_areas,CortexDirection)

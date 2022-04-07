@@ -31,14 +31,18 @@ n_Cond = size(cond,2);
 % If n_Cond == 2 color the title of the glass brains according to FracOccup
 if n_Cond == 2 % Load 2-sided pvals from FracOccup hypothesis tests
     file_FracOccup = 'LEiDA_Stats_FracOccup.mat';
-    load([data_dir file_FracOccup], 'P_pval2sided');
+    if isfile([data_dir file_FracOccup])
+        load([data_dir file_FracOccup], 'P_pval2sided');
+        P_pval2sided = squeeze(P_pval2sided);
+    end
 end
 
-disp('%%%%%%%%%% Centroids overlap with Functional Brain Networks %%%%%%%%%%')
+disp('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% PLOT CENTROIDS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%')
+disp(' ')
 
 % Compute the overlap between cluster centroids obtained for each value of
 % K and the resting-state networks defined by Yeo et al. 2011
-disp('Computing overlap with Yeo resting-state networks')
+disp('Computing overlap of centroids (PL states) with Yeo resting state networks')
 [cc_V_yeo7, p_V_yeo7] = Overlap_LEiDA_Yeo(parcellation,n_areas,Kmeans_results,rangeK);
 
 % Color of the Yeo networks as in the original paper (Yeo et al., 2011)
@@ -50,14 +54,14 @@ Brain_Mask = niftiread('MNI152_T1_2mm_brain_mask.nii');
 scortex = smooth3(Brain_Mask > 0);
 
 % Orientation of the cortex
-disp(['Rendering the FC states using ' cortex_dir ':'])
-
-Fig1 = figure('Position', get(0, 'Screensize'));
+disp(' ')
+disp(['Rendering the centroids (using ' cortex_dir '):'])
+Fig = figure('Position', get(0, 'Screensize'));
 for k = 1:length(rangeK)
     
     % Matrix with the cluster centroids for a given K
     VLeida = Kmeans_results{k}.C;
-    disp(['- ' num2str(rangeK(k)) ' FC states'])
+    disp(['- K = ' num2str(rangeK(k))])
     
     for Centroid = 1:rangeK(k)
         
@@ -74,8 +78,13 @@ for k = 1:length(rangeK)
         end 
         sregion = smooth3(Centroid_Vol > 0);
         
-        % View networks from Top
-        subplot_tight(length(rangeK),rangeK(end),Centroid+(k-1)*rangeK(end),0.01)
+        % View networks (use different sizes depending on number of
+        % conditions)
+        if isfile([data_dir file_FracOccup]) && n_Cond == 2
+            subplot_tight(length(rangeK),rangeK(end),Centroid+(k-1)*rangeK(end),0.01)
+        else
+            subplot_tight(length(rangeK),rangeK(end),Centroid+(k-1)*rangeK(end),0.008)
+        end
              
         hold on
         % First plot a transparent cortex
@@ -106,24 +115,23 @@ for k = 1:length(rangeK)
         zlim([10 80])
         axis off
         
-        if p_V_yeo7(k,Centroid,net) < 0.05/rangeK(k)
-            if n_Cond == 2 % if only 2 conditions color the title of each brain according to pval from FracOccup hyp. tests
-                if P_pval2sided(k,Centroid) > 0.05
-                    title(['r=' num2str(cc_net,2) ' p<' num2str(p_V_yeo7(k,Centroid,net)*10,'%1.0e')],'Fontsize',5,'Color','k')
-                elseif P_pval2sided(k,Centroid) < 0.05 && P_pval2sided(k,Centroid) > (0.05/rangeK(k))
-                    title(['r=' num2str(cc_net,2) ' p<' num2str(p_V_yeo7(k,Centroid,net)*10,'%1.0e')],'Fontsize',5,'Color','r')
-                elseif P_pval2sided(k,Centroid) < 0.05/rangeK(k) && P_pval2sided(k,Centroid) > (0.05/sum(rangeK))
-                    title(['r=' num2str(cc_net,2) ' p<' num2str(p_V_yeo7(k,Centroid,net)*10,'%1.0e')],'Fontsize',5,'Color','g')
-                elseif P_pval2sided(k,Centroid) <= (0.05/sum(rangeK))
-                    title(['r=' num2str(cc_net,2) ' p<' num2str(p_V_yeo7(k,Centroid,net)*10,'%1.0e')],'Fontsize',5,'Color','b')
-                end
-            else
-                title(['r=' num2str(cc_net,2) ' p<' num2str(p_V_yeo7(k,Centroid,net)*10,'%1.0e')],'Fontsize',5,'Color','k')
+        if isfile([data_dir file_FracOccup]) && n_Cond == 2 % if only 2 conditions color the title of each brain according to pval from FracOccup hyp. tests
+            if P_pval2sided(k,Centroid) > 0.05
+                title(['p<' num2str(P_pval2sided(k,Centroid)*10,'%1.0e')],'Fontsize',5,'Color','k')
+            elseif P_pval2sided(k,Centroid) < 0.05 && P_pval2sided(k,Centroid) > (0.05/rangeK(k))
+                title(['p<' num2str(P_pval2sided(k,Centroid)*10,'%1.0e')],'Fontsize',5,'Color','r')
+            elseif P_pval2sided(k,Centroid) < 0.05/rangeK(k) && P_pval2sided(k,Centroid) > (0.05/sum(rangeK))
+                title(['p<' num2str(P_pval2sided(k,Centroid)*10,'%1.0e')],'Fontsize',5,'Color','g')
+            elseif P_pval2sided(k,Centroid) <= (0.05/sum(rangeK))
+                title(['p<' num2str(P_pval2sided(k,Centroid)*10,'%1.0e')],'Fontsize',5,'Color','b')
             end
         end
     end
 end
-saveas(Fig1, fullfile(data_dir, ['Centroid_Pyramid_' cortex_dir '.png']),'png');
-saveas(Fig1, fullfile(data_dir, ['Centroid_Pyramid_' cortex_dir '.fig']),'fig');
+saveas(Fig, fullfile(data_dir, ['Centroid_Pyramid_' cortex_dir '.png']),'png');
+saveas(Fig, fullfile(data_dir, ['Centroid_Pyramid_' cortex_dir '.fig']),'fig');
 disp(['- Plot successfully saved as Centroid_Pyramid_' cortex_dir]);
+
+disp(' ')
+close all;
         

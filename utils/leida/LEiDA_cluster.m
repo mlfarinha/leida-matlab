@@ -14,6 +14,8 @@ function [Kmeans_results,rangeK] = LEiDA_cluster(data_dir)
 % Author: Joana Cabral, Universidade do Minho, joanacabral@med.uminho.pt
 %         Miguel Farinha, ICVS/2CA-Braga, miguel.farinha@ccabraga.pt
 
+disp('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% CLUSTERING %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%');
+
 % Set maximum/minimum number of clusters
 mink = 2;
 maxk = 20;
@@ -31,15 +33,16 @@ rangeK = mink : maxk;
 Kmeans_results = cell(size(rangeK));
 
 % Number of new initial cluster centroid positions to run
-replicates = 500;
+replicates = 1000;
 
+disp(' ');
 disp('Clustering eigenvectors into:')
 
 % For each K do:
 for K = 1:length(rangeK)
     disp(['- ' num2str(rangeK(K)) ' FC states'])
     [IDX, C, SUMD, D] = kmeans(V1_all,rangeK(K),'Distance','Cosine','Replicates',replicates,'MaxIter',1000,'OnlinePhase','off',...,
-                              'Display','off','Options',statset('UseParallel',0));
+                              'Display','off','Options',statset('UseParallel',1));
                          
     % ind_sort sorts the clusters in descending order of occupancy
     [~, ind_sort] = sort(hist(IDX,1:rangeK(K)),'descend');
@@ -55,3 +58,4 @@ save_file = 'LEiDA_Clusters.mat';
 
 save([data_dir '/' save_file], 'Kmeans_results', 'rangeK')
 disp(['K-means clustering completed and results saved as ' save_file])
+disp(' ');

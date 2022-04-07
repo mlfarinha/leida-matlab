@@ -23,7 +23,7 @@ function LEiDA_stats_FracOccup(data_dir,cond,pair)
 %         Miguel Farinha, ICVS/2CA-Braga, miguel.farinha@ccabraga.pt
 
 % Default number of permutations
-n_permutations = 5000;
+n_permutations = 10000;
 % Default number of bootstrap samples within each permutation sample
 n_bootstraps = 500;
 
@@ -33,38 +33,47 @@ file_V1 = 'LEiDA_EigenVectors.mat';
 file_cluster = 'LEiDA_Clusters.mat';
 
 % Load required data:
-load([data_dir file_V1],'Time_sessions','Data_info');
-load([data_dir file_cluster],'Kmeans_results', 'rangeK');
+if isfile([data_dir file_V1])
+    load([data_dir file_V1], 'Time_sessions', 'Data_info', 'idx_data');
+end
+if isfile([data_dir file_cluster])
+    load([data_dir file_cluster], 'Kmeans_results', 'rangeK');
+end
 
-N_scans = max(Time_sessions);
+% Number of scans considered to compute V1
+N_scans = length(idx_data);
 
 % Number of conditions of the experiment
 n_Cond = size(cond,2);
 
 Index_Conditions = [];
-for s = 1:length(Data_info)
-    FileName = Data_info(s).name;
+for s = 1:length(idx_data)
+    FileName = Data_info(idx_data(s)).name;
+    find_c = 0;
     for c = 1:n_Cond
         if contains(FileName,string(cond(c)))
+            find_c = 1;
             Index_Conditions = cat(2, Index_Conditions, c);
         else
             continue
         end
     end
+    if find_c == 0
+        Index_Conditions = cat(2, Index_Conditions, 0);
+    end    
 end
 
-% Code below computes the fractional occupancy and runs hypothesis tests
-disp('%%%%%%%%%%%%%%%%%%%%%%% Fractional Occupancy %%%%%%%%%%%%%%%%%%%%%%%')
-
+disp('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% FRACTIONAL OCCUPANCY %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%');
+disp(' ')
 %% CALCULATE THE FRACTIONAL OCCUPANCY OF EACH STATE FOR K-MEANS CLUSTERING SOLUTIONS
 
-% For every fMRI subject and condition calculate probability of each state c.
+% For every fMRI scan calculate probability of each state c.
 P = zeros(N_scans,length(rangeK),rangeK(end));
 
 for k = 1:length(rangeK)
     for s = 1:N_scans
 
-        T = Time_sessions == s;
+        T = Time_sessions == idx_data(s);
         % Vector of the cluster to which each observation belongs to for subject s
         Ctime = Kmeans_results{k}.IDX(T);
         
@@ -81,12 +90,12 @@ clear Kmeans_results
 
 if pair == 0
     
-    disp('Running Levene''s test of equality of variances:')
+    disp('Running Levene''s test of equality of variances to select the statistic to be used in the permutation tests')
     % matrix to store p-value of Levene's test of equality of variances
     levene_pval = zeros(n_Cond*(n_Cond-1)/2,length(rangeK),rangeK(end));
 
     for k = 1:length(rangeK)
-        disp(['- ' num2str(rangeK(k)) ' FC states'])
+        % disp(['- ' num2str(rangeK(k)) ' FC states'])
         for c = 1:rangeK(k)
             cond_pair = 1;
             for cond1 = 1:n_Cond-1
@@ -110,8 +119,9 @@ end
 
 %% PERMUTATION STATISTICS WITH WITHIN BOOTSTRAP SAMPLES
 
-disp('The hypothesis tests take a considerable amount of time to run.')
-disp('Testing differences in fractional occupancy:')
+disp(' ')
+disp(['Attention: permutation tests take a considerable amount of time to run (' num2str(n_permutations) ' permutations).'])
+disp('Testing intergroup differences in fractional occupancy:')
 
 % Store p-values and effect size for K-means clustering solutions
 P_pval = zeros(n_Cond*(n_Cond-1)/2,length(rangeK),rangeK(end));
@@ -119,7 +129,7 @@ P_pval2sided = zeros(n_Cond*(n_Cond-1)/2,length(rangeK),rangeK(end));
 effectsize = zeros(n_Cond*(n_Cond-1)/2,length(rangeK),rangeK(end));
 
 for k = 1:length(rangeK)
-    disp(['- ' num2str(rangeK(k)) ' FC states'])
+    disp(['- K = ' num2str(rangeK(k))])
     for c = 1:rangeK(k)
         cond_pair = 1;
         for cond1 = 1:n_Cond-1
@@ -160,4 +170,6 @@ save_file = 'LEiDA_Stats_FracOccup.mat';
 save([data_dir '/' save_file],'P','P_pval','P_pval2sided', 'effectsize', 'levene_pval',...,
                               'cond','rangeK','file_cluster','file_V1','Index_Conditions','pair')
 
-disp(['Fractional occupancy values and hypothesis tests results saved successfully as ' save_file])
+disp(' ')
+disp(['Fractional occupancy values and results from permutation tests saved successfully as ' save_file])
+disp(' ')

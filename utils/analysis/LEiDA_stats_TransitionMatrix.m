@@ -1,15 +1,15 @@
-function LEiDA_stats_TransitionMatrix(data_dir,save_dir,bestK)
+function LEiDA_stats_TransitionMatrix(data_dir,save_dir,selectedK)
 %
-% For the optimalK compute the transition matrix for each participant.
-% Perform hypothesis tests to check for differences in the state-to-state
-% transition probabilities between conditions.
+% For the selected K compute the transition probability matrix for each
+% participant. Perform hypothesis tests to check for differences in the
+% state-to-state transition probabilities between conditions.
 %
 % INPUT:
 % data_dir       directory where the LEiDA results are saved
 % save_dir       directory to save the results from the hypothesis tests
 %                of the comparison of the mean transition probabilities for
 %                the selected K
-% bestK          optimal K defined by the user
+% selectedK      K defined by the user
 %
 % OUTPUT:
 % TM             transition matrix for optimal K for all participants
@@ -21,11 +21,11 @@ function LEiDA_stats_TransitionMatrix(data_dir,save_dir,bestK)
 % levene_pval   p-value obtained from computing the Levene's test on the
 %               state-to-state transition probability values
 %
-% Author: Joana Cabral, Universidade do Minho, joanacabral@med.uminho.pt
+% Author: Joana Cabral, University of Minho, joanacabral@med.uminho.pt
 %         Miguel Farinha, ICVS/2CA-Braga, miguel.farinha@ccabraga.pt
 
 % Default number of permutations
-n_permutations = 5000;
+n_permutations = 10000;
 % Default number of bootstrap samples within each permutation sample
 n_bootstraps = 500;
 
@@ -37,35 +37,44 @@ file_cluster = 'LEiDA_Clusters.mat';
 file_P = 'LEiDA_Stats_FracOccup.mat';
 
 % Load required data:
-load([data_dir file_V1], 'Time_sessions');
-load([data_dir file_cluster], 'Kmeans_results', 'rangeK');
-load([data_dir file_P], 'cond', 'P', 'Index_Conditions', 'pair');
+if isfile([data_dir file_V1])
+    load([data_dir file_V1], 'Time_sessions', 'idx_data');
+end
+if isfile([data_dir file_cluster])
+    load([data_dir file_cluster], 'Kmeans_results', 'rangeK');
+end
+if isfile([data_dir file_P])
+    load([data_dir file_P], 'cond', 'P', 'Index_Conditions', 'pair');
+end
 
-N_scans = max(Time_sessions);
+% Number of scans considered to compute V1
+N_scans = length(idx_data);
 
 % Number of conditions of the experiment
 n_Cond = size(cond,2);
 
 % Code below computes the fractional occupancy and runs hypothesis tests
-disp('%%%%%%%%%%%%%%%%%%%%%%% TRANSITION PROBABILITIES %%%%%%%%%%%%%%%%%%%%%%%')
+disp(' ')
+disp('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TRANSITION PROBABILITIES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%');
+disp(' ')
 
 %% CALCULATE THE TRANSITION MATRIX FOR THE OPTIMAL K
 
 % Matrix with probability of occurrence of each FC state for chosen K
-P_K = squeeze(P(:,bestK-1,1:bestK));
+P_K = squeeze(P(:,selectedK-1,1:selectedK));
 
 % Transition probability matrix
-TM = zeros(N_scans, bestK, bestK);
-TMnorm = zeros(N_scans, bestK, bestK);
+TM = zeros(N_scans, selectedK, selectedK);
+TMnorm = zeros(N_scans, selectedK, selectedK);
 
 for s = 1:N_scans
 
-    T = Time_sessions == s;
-    Ctime = Kmeans_results{rangeK==bestK}.IDX(T);
+    T = Time_sessions == idx_data(s);
+    Ctime = Kmeans_results{rangeK == selectedK}.IDX(T);
     % alpha corresponds to departure state;
-    for alpha = 1:bestK
+    for alpha = 1:selectedK
         % beta corresponds to arrival state;
-        for beta = 1:bestK
+        for beta = 1:selectedK
             % count number transition from alpha to beta
             alpha2beta = 0;
             for i = 1:length(Ctime)-1
@@ -94,13 +103,13 @@ clear Kmeans_results
 
 if pair == 0
     
-    disp('Running Levene''s test of equality of variances:')
+    disp('Running Levene''s test of equality of variances to select the statistic to be used in the permutation tests')
     % matrix to store p-value of Levene's test of equality of variances
-    levene_pval = zeros(n_Cond*(n_Cond-1)/2,bestK,bestK);
+    levene_pval = zeros(n_Cond*(n_Cond-1)/2,selectedK,selectedK);
 
-    for c_out = 1:bestK
-        for c_in = 1:bestK
-            disp(['- Transition from FC state ' num2str(c_out) ' to FC state ' num2str(c_in)])
+    for c_out = 1:selectedK
+        for c_in = 1:selectedK
+            % disp(['- Transition from FC state ' num2str(c_out) ' to FC state ' num2str(c_in)])
             cond_pair = 1;
             for cond1 = 1:n_Cond-1
                 for cond2 = cond1+1:n_Cond
@@ -121,17 +130,18 @@ end
 
 %%  PERMUTATION STATISTICS WITH WITHIN BOOTSTRAP SAMPLES
 
-disp('The hypothesis tests take a considerable amount of time to run.')
-disp('Testing differences in transition probabilities:')
+disp(' ')
+disp(['Attention: permutation tests take a considerable amount of time to run (' num2str(n_permutations) ' permutations).'])
+disp('Testing intergroup differences in transition probabilities:')
 
 % Store p-values and effect size
-TM_pval = zeros(n_Cond*(n_Cond-1)/2,bestK,bestK);
-TM_pval2sided = zeros(n_Cond*(n_Cond-1)/2,bestK,bestK);
-effectsize = zeros(n_Cond*(n_Cond-1)/2,bestK,bestK);
+TM_pval = zeros(n_Cond*(n_Cond-1)/2,selectedK,selectedK);
+TM_pval2sided = zeros(n_Cond*(n_Cond-1)/2,selectedK,selectedK);
+effectsize = zeros(n_Cond*(n_Cond-1)/2,selectedK,selectedK);
 
-for c_out = 1:bestK 
-    for c_in = 1:bestK
-        disp(['- Transition from FC state ' num2str(c_out) ' to FC state ' num2str(c_in)])
+for c_out = 1:selectedK 
+    for c_in = 1:selectedK
+        disp(['- From PL state ' num2str(c_out) ' to PL state ' num2str(c_in)])
         cond_pair = 1;
         for cond1 = 1:n_Cond-1
             for cond2 = cond1+1:n_Cond
@@ -172,4 +182,6 @@ save_file = 'LEiDA_Stats_TransitionMatrix.mat';
 save([save_dir '/' save_file],'TM','TMnorm','TM_pval','TM_pval2sided','effectsize','levene_pval',...,
                               'cond','rangeK','file_V1','file_cluster','file_P','Index_Conditions')
 
-disp(['Transition probability values and hypothesis tests results saved successfully as ' save_file])
+disp(' ')
+disp(['Transition probability values and results from permutation tests saved successfully as ' save_file])
+disp(' ')

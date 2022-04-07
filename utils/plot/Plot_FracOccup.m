@@ -41,7 +41,8 @@ subplot_map = triu(subplot_map).';
 subplot_indices = find(subplot_map);
 
 % Code below generates the figures relative to the fractional occupancy
-disp('%%%%%%%%%%%%%%%%%%%% Fractional Occupancy Figures %%%%%%%%%%%%%%%%%%%%')
+disp('%%%%%%%%%%%%%%%%%%%%%%%%%%% FRACTIONAL OCCUPANCY FIGURES %%%%%%%%%%%%%%%%%%%%%%%%%%%')
+disp(' ')
 
 % Possible pairs of conditions comparisons
 condRow = zeros(1,n_Cond*(n_Cond-1)/2);
@@ -59,7 +60,8 @@ end
 
 % Plot of two-sided p-values from fractional occupancy hypothesis tests
 Fig1 = figure('Position', get(0, 'Screensize'));
-disp('Plotting two-sided p-values from hypothesis tests:')
+disp(' ')
+disp('Plotting two-sided p-values from hypothesis (permutation) tests:')
 for s_ind = 1:length(subplot_indices)
     
     % disp(['- ' cond{condRow(s_ind)} ' vs ' cond{condCol(s_ind)}])
@@ -109,47 +111,51 @@ saveas(Fig1, fullfile(data_dir, 'FracOccup_pvalues.fig'),'fig');
 disp('- Plot successfully saved as FracOccup_pvalues');
 
 % Barplot of mean fractional occupancy for each condition across K (all)
-Fig2 = figure('Position', get(0, 'Screensize'));
-disp('Plotting barplot of the mean fractional occupancy across conditions and K:')
-for k = 1:length(rangeK)
-    
-    % disp(['- ' num2str(rangeK(k)) ' FC states'])
-    
-    for c = 1:rangeK(k)
-        
-        subplot_tight(length(rangeK),rangeK(end),c+(k-1)*rangeK(end),0.015)
-        
-        hold on
-        
-        P_cond = cell(1,n_Cond);
-        mean_P_cond = zeros(1,n_Cond);
-        ste = zeros(1,n_Cond);
-        for j = 1:n_Cond
-            P_cond{j} = P(Index_Conditions == j,rangeK == k+1,c);
-            mean_P_cond(j) = nanmean(P(Index_Conditions == j,rangeK == k+1,c));
-            ste(j) = std(P(Index_Conditions == j,rangeK == k+1,c))/sqrt(numel(P(Index_Conditions == j,rangeK == k+1,c)));
+if n_Cond > 2
+    Fig2 = figure('Position', get(0, 'Screensize'));
+    disp(' ')
+    disp('Plotting barplot of the mean fractional occupancy across conditions and K:')
+    for k = 1:length(rangeK)
+
+        % disp(['- ' num2str(rangeK(k)) ' FC states'])
+
+        for c = 1:rangeK(k)
+
+            subplot_tight(length(rangeK),rangeK(end),c+(k-1)*rangeK(end),0.015)
+
+            hold on
+
+            P_cond = cell(1,n_Cond);
+            mean_P_cond = zeros(1,n_Cond);
+            ste = zeros(1,n_Cond);
+            for j = 1:n_Cond
+                P_cond{j} = P(Index_Conditions == j,rangeK == k+1,c);
+                mean_P_cond(j) = nanmean(P(Index_Conditions == j,rangeK == k+1,c));
+                ste(j) = std(P(Index_Conditions == j,rangeK == k+1,c))/sqrt(numel(P(Index_Conditions == j,rangeK == k+1,c)));
+            end
+
+            bar(1:n_Cond,mean_P_cond,'EdgeColor','k','LineWidth',0.8,'FaceColor','none')
+            hold on
+            errorbar(mean_P_cond,ste,'LineStyle','none','Color','k','CapSize',5,'LineWidth',0.4);
+            if k == length(rangeK)
+                set(gca,'XTick',1:n_Cond,'XTickLabel',cond,'Fontsize',6,'TickLabelInterpreter','none')
+                % xtickangle(45)
+            else
+                set(gca,'XTick',1:n_Cond,'XTickLabel',[],'Fontsize',6,'TickLabelInterpreter','none')
+            end
+            set(gca,'color','none')
+
+            hold off
+            box off
         end
-        
-        bar(1:n_Cond,mean_P_cond,'EdgeColor','k','LineWidth',0.8,'FaceColor','none')
-        hold on
-        errorbar(mean_P_cond,ste,'LineStyle','none','Color','k','CapSize',5,'LineWidth',0.4);
-        if k == length(rangeK)
-            set(gca,'XTick',1:n_Cond,'XTickLabel',cond,'Fontsize',6,'TickLabelInterpreter','none')
-            % xtickangle(45)
-        else
-            set(gca,'XTick',1:n_Cond,'XTickLabel',[],'Fontsize',6,'TickLabelInterpreter','none')
-        end
-        set(gca,'color','none')
-        
-        hold off
-        box off
     end
+    saveas(Fig2, fullfile(data_dir, 'FracOccup_Barplot_Allconditions.png'),'png');
+    saveas(Fig2, fullfile(data_dir, 'FracOccup_Barplot_Allconditions.fig'),'fig');
+    disp('- Plot successfully saved as FracOccup_Barplot_Allconditions');
 end
-saveas(Fig2, fullfile(data_dir, 'FracOccup_Barplot_Allconditions.png'),'png');
-saveas(Fig2, fullfile(data_dir, 'FracOccup_Barplot_Allconditions.fig'),'fig');
-disp('- Plot successfully saved as FracOccup_Barplot_Allconditions');
 
 % Barplot of mean fractional occupancy for each pair of conditions
+disp(' ')
 disp('Plotting barplots of mean fractional occupancy for each pair of conditions:')
 n_compare = n_Cond*(n_Cond-1)/2;
 for i = 1:n_compare
@@ -199,7 +205,8 @@ for i = 1:n_compare
 end
 
 % Plot of Hedge's effect size from fractional occupancy hypothesis tests
-disp('Plotting Hedge''s effect size from hypothesis tests:')
+disp(' ')
+disp('Plotting Hedge''s effect size from hypothesis (permutation) tests:')
 Fig4 = figure('Position', get(0, 'Screensize'));
 for s_ind = 1:length(subplot_indices)
     
@@ -246,3 +253,6 @@ end
 saveas(Fig4, fullfile(data_dir, 'FracOccup_effetcsize.png'),'png');
 saveas(Fig4, fullfile(data_dir, 'FracOccup_effetcsize.fig'),'fig');
 disp('- Plot successfully saved as FracOccup_effetcsize');
+
+disp(' ')
+close all;
