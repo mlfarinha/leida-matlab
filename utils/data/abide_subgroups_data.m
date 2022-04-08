@@ -91,5 +91,5 @@ disp(['Number of participants with tag Control: ' num2str(n_hc)]); % 460
 disp(['Number of participants with tag Autism: ' num2str(n_ad)]); % 251
 disp(['Number of participants with tag Aspergers: ' num2str(n_asp)]); % 72
 disp(['Number of participants with tag PDD-NOS: ' num2str(n_pdd)]); % 32
-disp(['Number of participants with tag Aspergers: ' num2str(n_asp_or_pdd)]); % 6
+disp(['Number of participants with tag Aspergers or PDD-NOS: ' num2str(n_asp_or_pdd)]); % 6
 disp(['The maximum number of TRs across participants is: ' num2str(tmax)]); % 315
