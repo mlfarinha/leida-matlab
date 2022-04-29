@@ -1,4 +1,4 @@
-function Plot_K_vector_numbered(data_dir,save_dir,selectedK,parcellation)
+function Plot_K_vector_numbered(data_dir,save_dir,selectedK)
 %
 % Plot the centroids in vector format with the number of each area.
 %
@@ -6,7 +6,6 @@ function Plot_K_vector_numbered(data_dir,save_dir,selectedK,parcellation)
 % data_dir      directory where LEiDA results are stored
 % save_dir      directory to save results for selected optimal K
 % selectedK     K defined by the user
-% parcellation  parcellation template used to segment the brain
 %
 % OUTPUT:
 % .fig/.png     Plot each centroid as a barplot and number of each area
@@ -38,7 +37,11 @@ disp(' ');
 disp(['Plotting the ' num2str(selectedK) ' PL states as barplot with numbered areas:'])
 Fig = figure('Position', get(0, 'Screensize')); 
 for c = 1:selectedK
-    subplot(1,selectedK,c)
+    if selectedK <= 10
+        subplot(1,selectedK,c)
+    else
+        subplot_tight(2,10,c,0.065)
+    end
     Vo = V(Order,c);
     hold on
     barh(Vo.*(Vo < 0),'FaceColor',[0.2  .2  1],'EdgeColor','none','Barwidth',.5)
@@ -49,7 +52,7 @@ for c = 1:selectedK
     ax = gca;
     ax.XAxis.FontSize = 12;
     grid on
-    title(['PL state ' num2str(c)],'Fontsize',12)
+    title(['PL state ' num2str(c)], 'Fontsize',12)
 end
 saveas(Fig, fullfile(save_dir, ['K' num2str(selectedK) '_VectorNumber.png']),'png');
 saveas(Fig, fullfile(save_dir, ['K' num2str(selectedK) '_VectorNumber.fig']),'fig');

@@ -29,8 +29,8 @@ load([data_dir file_clusters],'Kmeans_results', 'rangeK');
 n_Cond = size(cond,2);
 
 % If n_Cond == 2 color the title of the glass brains according to FracOccup
+file_FracOccup = 'LEiDA_Stats_FracOccup.mat';
 if n_Cond == 2 % Load 2-sided pvals from FracOccup hypothesis tests
-    file_FracOccup = 'LEiDA_Stats_FracOccup.mat';
     if isfile([data_dir file_FracOccup])
         load([data_dir file_FracOccup], 'P_pval2sided');
         P_pval2sided = squeeze(P_pval2sided);

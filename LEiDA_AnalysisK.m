@@ -32,14 +32,14 @@ function LEiDA_AnalysisK
 %% A: USER INPUT PARAMETERS
 
 % Define K value, i.e., K returning the most significant differences between conditions:
-SelectK = 10;
+SelectK = 15;
 
 % Directory of the LEiDA toolbox folder:
 LEiDA_directory = 'D:/LEiDA_Toolbox/';
 % Name of the run to be used to create the folder to save the data:
-run_name = 'ABIDE_dparsf_all_AAL116';
+run_name = 'ABIDE_dparsf_AAL120';
 % Parcellation used to run LEiDA_Start script:
-Parcellation = 'AAL116';
+Parcellation = 'AAL120';
 
 % AFTER FILLING IN THE INPUT PARAMETERS:
 % ||||||||||||||||||||||||||||||| CLICK RUN |||||||||||||||||||||||||||||||
@@ -77,7 +77,7 @@ Plot_K_3Dbrain(leida_res,K_dir,SelectK,Parcellation);
 Plot_K_matrix(leida_res,K_dir,SelectK);
 
 % Plot PL states in vector format with number of each parcel
-Plot_K_vector_numbered(leida_res,K_dir,SelectK,Parcellation);
+Plot_K_vector_numbered(leida_res,K_dir,SelectK);
 
 % Plot boxplot of fractional occupancy values
 Plot_K_boxplot_FO(leida_res,K_dir,SelectK,Parcellation);

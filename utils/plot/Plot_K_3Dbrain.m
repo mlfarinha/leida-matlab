@@ -55,7 +55,15 @@ for c = 1:selectedK
     [~, net] = max(cc_V_yeo7(rangeK == selectedK,c,:));
     
     % First Plot view from top
-    subplot_tight(2,selectedK,c,0.01)
+    if selectedK <= 10
+        subplot_tight(2,selectedK,c,0.01)
+    else
+        if c <= 10
+            subplot_tight(4,10,c,0.03)
+        else
+            subplot_tight(4,10,10+c,0.03)
+        end
+    end
     hold on
     cortexpatch = patch(isosurface(scortex,0.1), 'FaceColor', [0.9 0.9 0.9], 'EdgeColor', 'none','FaceAlpha', 0.2);
     reducepatch(cortexpatch,0.01);
@@ -97,7 +105,15 @@ for c = 1:selectedK
     axis off
     
     %  Same but view from the side
-    subplot_tight(2,selectedK,c+selectedK,0.01)
+    if selectedK <= 10
+        subplot_tight(2,selectedK,c+selectedK,0.01)
+    else
+        if c <= 10
+            subplot_tight(4,10,10+c,0.02)
+        else
+            subplot_tight(4,10,20+c,0.02)
+        end
+    end
     hold on
     cortexpatch = patch(isosurface(scortex,0.1), 'FaceColor', [0.9 0.9 0.9], 'EdgeColor', 'none','FaceAlpha', 0.2);
     reducepatch(cortexpatch,0.01);

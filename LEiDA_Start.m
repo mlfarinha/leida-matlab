@@ -29,15 +29,15 @@ function LEiDA_Start
 % Directory of the LEiDA toolbox folder:
 LEiDA_directory = 'D:/LEiDA_Toolbox/';
 % Directory of the folder with the parcellated neuroimaging data:
-Data_directory = 'D:/LEiDA_Toolbox/ABIDE_dparsf_all_aal116/';
+Data_directory = 'D:/LEiDA_Toolbox/ABIDE_dparsf_AAL120/';
 % Name of the run to be used to create the folder to save the data:
-run_name = 'ABIDE_dparsf_all_AAL116';
+run_name = 'ABIDE_dparsf_AAL120';
 % Tag of conditions given in the parcellated image files:
-Conditions_tag = {'Control','Autism'};
+Conditions_tag = {'CONT','AUT','ASP','PDD_NOS'};
 % Parcellation applied to the imaging data (see tutorial):
-Parcellation = 'AAL116';
+Parcellation = 'AAL120';
 % Number of brain areas to consider for analysis;
-N_areas = 90;
+N_areas = 94;
 % Repetition time (TR) of the fMRI data (if unknown set to 1):
 TR = 1;
 % Maximum number of TRs for all fMRI sessions:
@@ -52,7 +52,7 @@ fhi = 0.01;
 % same; 1: subjects are the same across conditions)
 Paired_tests = 0;
 % Direction to plot the FC states/brain ('SideView' or 'TopView'):
-CortexDirection = 'SideView';
+CortexDirection = 'TopView';
 
 % AFTER FILLING IN THE INPUT PARAMETERS AND ADDING LEiDA_Function FOLDER TO
 % YOUR MATLAB PATH:
@@ -70,22 +70,22 @@ end
 leida_res = [LEiDA_directory 'LEiDA_Results_' run_name '/'];
 
 % Compute the leading eigenvectors of the data
-LEiDA_data(Data_directory,leida_res,N_areas,Tmax,apply_filter,flp,fhi,TR);
+% LEiDA_data(Data_directory,leida_res,N_areas,Tmax,apply_filter,flp,fhi,TR);
 
 % Cluster the leading eigenvectors of all subjects
-LEiDA_cluster(leida_res);
+% LEiDA_cluster(leida_res);
 
 % Compute the fractional occupancy and perform hypothesis tests
-LEiDA_stats_FracOccup(leida_res,Conditions_tag,Paired_tests);
+% LEiDA_stats_FracOccup(leida_res,Conditions_tag,Paired_tests);
 
 % Compute the dwell time and perform hypothesis tests
-LEiDA_stats_DwellTime(leida_res,Conditions_tag,Paired_tests,TR);
+% LEiDA_stats_DwellTime(leida_res,Conditions_tag,Paired_tests,TR);
 
 % Generate and save the p-value and barplot plots for fractional occupancy
-Plot_FracOccup(leida_res)
+% Plot_FracOccup(leida_res)
 
 % Generate and save the p-value and barplot plots for dwell time
-Plot_DwellTime(leida_res)
+% Plot_DwellTime(leida_res)
 
 % Plot the centroids obtained using LEiDA and their overlap with Yeo nets
 Plot_Centroid_Pyramid(leida_res,Conditions_tag,Parcellation,N_areas,CortexDirection)

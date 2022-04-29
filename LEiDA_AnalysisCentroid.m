@@ -29,16 +29,16 @@ function LEiDA_AnalysisCentroid
 %% A: USER INPUT PARAMETERS
 
 % Define K value, i.e., K returning the most significant differences between conditions:
-SelectK = 17;
+SelectK = 15;
 % Define the PL state to be studied (1 <= PL state <= SelectK):
-Centroid = 15;
+Centroid = 10;
 
 % Directory of the LEiDA toolbox folder:
 LEiDA_directory = 'D:/LEiDA_Toolbox/';
 % Name of the run to be used to create the folder to save the data:
-run_name = 'ABIDE_dparsf_all_AAL116';
+run_name = 'ABIDE_dparsf_AAL120';
 % Parcellation used to run LEiDA_Start script:
-Parcellation = 'AAL116';
+Parcellation = 'AAL120';
 
 % AFTER FILLING IN THE INPUT PARAMETERS:
 % ||||||||||||||||||||||||||||||| CLICK RUN |||||||||||||||||||||||||||||||

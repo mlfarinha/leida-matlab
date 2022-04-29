@@ -26,14 +26,14 @@ function LEiDA_StateTime
 %% A: USER INPUT PARAMETERS
 
 % Define K value, i.e., K returning the most significant differences between conditions:
-SelectK = 10;
+SelectK = 15;
 % Define the subject to analyse into more detail (file name of subject or unique ID/number):
 Subject = 0051466;
 
 % Directory of the LEiDA toolbox folder:
 LEiDA_directory = 'D:/LEiDA_Toolbox/';
 % Name of the run to be used to create the folder to save the data:
-run_name = 'ABIDE_dparsf_all_AAL116';
+run_name = 'ABIDE_dparsf_AAL120';
 
 
 % AFTER FILLING IN THE INPUT PARAMETERS:
