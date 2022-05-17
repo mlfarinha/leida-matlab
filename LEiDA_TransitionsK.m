@@ -21,7 +21,7 @@ function LEiDA_TransitionsK
 %    - Plot the intergroup differences between transition probabilties
 %
 % Tutorial: README.md
-% Version:  V1.0, April 2022
+% Version:  V1.0, May 2022
 % Authors:  Joana Cabral, Universidade do Minho, joanacabral@med.uminho.pt
 %           Miguel Farinha, ICVS/2CA-Braga, miguel.farinha@ccabraga.pt
 
@@ -59,10 +59,10 @@ disp(' ')
 disp(['%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TRANSITIONS FOR K = ' num2str(SelectK) ' CLUSTERS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%'])
 
 % Compute the transition probability matrix and perform hypothesis tests
-LEiDA_stats_TransitionMatrix(leida_res,K_dir,SelectK);
+% LEiDA_stats_TransitionMatrix(leida_res,K_dir,SelectK);
 
 % Plot the mean transition probability matrix
-Plot_K_tpm(K_dir,SelectK);
+% Plot_K_tpm(K_dir,SelectK);
 
 % Plot summary of differences in transition probabilities between conditions
 Plot_K_diffs_transitions(K_dir,SelectK);

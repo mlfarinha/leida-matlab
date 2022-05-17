@@ -51,7 +51,12 @@ disp(['Plotting the boxplot of dwell time values for each of the ' num2str(selec
 Fig = figure('Position', get(0, 'Screensize'));   
 for c = 1:selectedK
     
-    subplot(4,selectedK,[c+selectedK c+2*selectedK])
+    if selectedK <= 10
+        subplot(4,selectedK,[c+selectedK c+2*selectedK])
+    else
+        subplot(2,10,c)
+    end
+    
     [~, net] = max(cc_V_yeo7(rangeK == selectedK,c,:));
     LT_cond = cell(1,n_Cond);
     r = cell(1,n_Cond);
@@ -78,9 +83,10 @@ for c = 1:selectedK
     hold on
     set(gca,'XTickLabel',cond)
     xtickangle(30)
-    if c == 1
+    if c == 1 || c == 11
         ylabel('Dwell Time (s)','Fontsize',10);
     end
+    title(['PL State ' num2str(c)]);
     set(gca,'color','none')
     
     X_locations = zeros(n_Cond*(n_Cond-1)/2,2);

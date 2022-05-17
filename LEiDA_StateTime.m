@@ -19,7 +19,7 @@ function LEiDA_StateTime
 %    - Plot cluster stairs for specific subject
 %
 % Tutorial: README.md
-% Version:  V1.0, April 2022
+% Version:  V1.0, May 2022
 % Authors:  Joana Cabral, Universidade do Minho, joanacabral@med.uminho.pt
 %           Miguel Farinha, ICVS/2CA-Braga, miguel.farinha@ccabraga.pt
 

@@ -20,7 +20,7 @@ function Plot_K_diffs_transitions(data_dir,selectedK)
 file_TM = 'LEiDA_Stats_TransitionMatrix.mat';
 
 % Load required data:
-load([data_dir file_TM],'cond','TM_pval2sided','rangeK');
+load([data_dir file_TM],'cond','TM_pval2sided');
 
 % Number of conditions of the experiment
 n_Cond = size(cond,2);
@@ -73,11 +73,14 @@ for s_ind = 1:length(subplot_indices)
     % Insert the labels
     for c_out = 1:selectedK
         for c_in = 1:selectedK
-            if TM_pval2sided(s_ind,c_out,c_in) < (0.05/selectedK) && TM_pval2sided(s_ind,c_out,c_in) > (0.05/sum(rangeK))
-                text(X(c_in,c_out),Y(c_out,c_in)+.22,'*','FontSize',18,'HorizontalAlignment','center','FontWeight','bold','Color','g');
+            if TM_pval2sided(s_ind,c_out,c_in) < 0.05 && TM_pval2sided(s_ind,c_out,c_in) > (0.05/selectedK)
+                text(X(c_out,c_in),Y(c_out,c_in)+.22,'*','FontSize',16,'HorizontalAlignment','center','FontWeight','bold','Color','r');
             end
-            if TM_pval2sided(s_ind,c_out,c_in) <= (0.05/sum(rangeK))
-                text(X(c_in,c_out),Y(c_out,c_in)+.22,'*','FontSize', 18,'HorizontalAlignment','center','FontWeight','bold','Color','b');
+            if TM_pval2sided(s_ind,c_out,c_in) < (0.05/selectedK) && TM_pval2sided(s_ind,c_out,c_in) > (0.05/(selectedK*selectedK))
+                text(X(c_out,c_in),Y(c_out,c_in)+.22,'*','FontSize',16,'HorizontalAlignment','center','FontWeight','bold','Color','g');
+            end
+            if TM_pval2sided(s_ind,c_out,c_in) <= (0.05/(selectedK*selectedK))
+                text(X(c_out,c_in),Y(c_out,c_in)+.22,'*','FontSize', 16,'HorizontalAlignment','center','FontWeight','bold','Color','b');
             end
         end
     end

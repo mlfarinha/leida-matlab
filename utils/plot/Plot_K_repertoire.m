@@ -144,7 +144,7 @@ for c = 1:selectedK
     axis off
     
     % PLOT THE VECTOR OF EACH FC STATE
-    subplot_tight(9,selectedK,[c+3*selectedK c+4*selectedK],0.05)
+    subplot_tight(9,selectedK,[c+3*selectedK c+4*selectedK],0.045)
     Vo = V(Order,c);
     hold on
     barh(Vo.*(Vo<0),'FaceColor',[0.2  .2  1],'EdgeColor','none','Barwidth',.5)
@@ -158,7 +158,7 @@ for c = 1:selectedK
     grid on
     
     % BOXPLOT FRACTIONAL OCCUPANCY
-    subplot_tight(9,selectedK,[c+5*selectedK c+6*selectedK],0.04)
+    subplot_tight(9,selectedK,[c+5*selectedK c+6*selectedK],0.035)
     
     P_cond = cell(1,n_Cond);
     g = cell(1,n_Cond);
@@ -233,7 +233,7 @@ for c = 1:selectedK
     box off
     
     % BOXPLOT DWELL TIME
-    subplot_tight(9,selectedK,[c+7*selectedK c+8*selectedK],0.04)
+    subplot_tight(9,selectedK,[c+7*selectedK c+8*selectedK],0.035)
     
     LT_cond = cell(1,n_Cond);
     r = cell(1,n_Cond);

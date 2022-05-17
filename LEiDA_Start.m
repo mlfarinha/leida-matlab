@@ -20,7 +20,7 @@ function LEiDA_Start
 %    - Pyramid of FC states
 %
 % Tutorial: README.md
-% Version:  V1.0, April 2022
+% Version:  V1.0, May 2022
 % Authors:  Joana Cabral, University of Minho, joanacabral@med.uminho.pt
 %           Miguel Farinha, ICVS/2CA-Braga, miguel.farinha@ccabraga.pt
 
@@ -70,22 +70,22 @@ end
 leida_res = [LEiDA_directory 'LEiDA_Results_' run_name '/'];
 
 % Compute the leading eigenvectors of the data
-% LEiDA_data(Data_directory,leida_res,N_areas,Tmax,apply_filter,flp,fhi,TR);
+LEiDA_data(Data_directory,leida_res,N_areas,Tmax,apply_filter,flp,fhi,TR);
 
 % Cluster the leading eigenvectors of all subjects
-% LEiDA_cluster(leida_res);
+LEiDA_cluster(leida_res);
 
 % Compute the fractional occupancy and perform hypothesis tests
-% LEiDA_stats_FracOccup(leida_res,Conditions_tag,Paired_tests);
+LEiDA_stats_FracOccup(leida_res,Conditions_tag,Paired_tests);
 
 % Compute the dwell time and perform hypothesis tests
-% LEiDA_stats_DwellTime(leida_res,Conditions_tag,Paired_tests,TR);
+LEiDA_stats_DwellTime(leida_res,Conditions_tag,Paired_tests,TR);
 
 % Generate and save the p-value and barplot plots for fractional occupancy
-% Plot_FracOccup(leida_res)
+Plot_FracOccup(leida_res)
 
 % Generate and save the p-value and barplot plots for dwell time
-% Plot_DwellTime(leida_res)
+Plot_DwellTime(leida_res)
 
 % Plot the centroids obtained using LEiDA and their overlap with Yeo nets
 Plot_Centroid_Pyramid(leida_res,Conditions_tag,Parcellation,N_areas,CortexDirection)
