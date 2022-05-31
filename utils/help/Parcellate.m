@@ -11,13 +11,13 @@ function Parcellate(data_dir,save_dir,parcellation,n_areas)
 % n_areas       number of areas of the parcellation to consider
 %
 % Author: Joana Cabral, University of Minho, joanacabral@med.uminho.pt
-%         Miguel Farinha, ICVS/2CA-Braga, miguel.farinha@ccabraga.pt
+%         Miguel Farinha, University of Minho, miguel.farinha@ccabraga.org
 
 % INPUT EXAMPLES:
-% data_dir = 'D:\LEiDA_Toolbox\Outputs\cpac\func_minimal\';
-% save_dir = 'D:\LEiDA_Toolbox\Outputs\cpac\func_minimal_AAL116\';
-% parcellation = 'AAL116'; (AAL116, dbs80, glasser360, glasser_378, Yeo7)
-% n_areas = 90;
+% data_dir = 'D:/LEiDA_Toolbox/Outputs/dparsf/nofilt_noglobal/';
+% save_dir = 'D:/LEiDA_Toolbox/ABIDE_dparsf_AAL120/';
+% parcellation = 'AAL120'; (AAL116, AAL120, dbs80, glasser360)
+% n_areas = 94;
 
 % Get number of files in folder
 % aux_data = [dir(fullfile([data_dir '*.nii'])); dir(fullfile([data_dir '*.nii.gz']))];

@@ -14,7 +14,7 @@ function Plot_K_3Dbrain(data_dir,save_dir,selectedK,parcellation)
 %               the overlap of each with the Yeo networks
 %
 % Authors: Joana Cabral, University of Minho, joanacabral@med.uminho.pt
-%          Miguel Farinha, ICVS/2CA-Braga, miguel.farinha@ccabraga.pt
+%          Miguel Farinha, University of Minho, miguel.farinha@ccabraga.org
 
 % File with the Kmeans results (output from LEiDA_cluster.m)
 file_cluster = 'LEiDA_Clusters.mat';

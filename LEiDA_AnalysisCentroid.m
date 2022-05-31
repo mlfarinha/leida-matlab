@@ -7,9 +7,11 @@ function LEiDA_AnalysisCentroid
 % Function to analyse one PL state from the set of K PL states chosen
 % according to the analysis from LEiDA_Start. This script will provide
 % detailed figures with relevant information regarding the selected
-% PL state. This function contains two sections: (A) user input parameters;
-% and (B) code to plot the figures for the selected PL state. The user
-% should only need to adapt section A.
+% PL state.
+% 
+% This function contains two sections:
+%       (A) User defines the parameters and selects the value of K.
+%       (B) Generate and save figures for the selected PL state.
 %
 % Start by reading the README.md file.
 %
@@ -22,9 +24,9 @@ function LEiDA_AnalysisCentroid
 %    - Plot of summary information for the selected PL state
 %
 % Tutorial: README.md
-% Version:  V1.0, May 2022
-% Authors:  Joana Cabral, Universidade do Minho, joanacabral@med.uminho.pt
-%           Miguel Farinha, ICVS/2CA-Braga, miguel.farinha@ccabraga.pt
+% Version:  V1.0, June 2022
+% Authors:  Joana Cabral, University of Minho, joanacabral@med.uminho.pt
+%           Miguel Farinha, University of Minho, miguel.farinha@ccabraga.org
 
 %% A: USER INPUT PARAMETERS
 
@@ -43,7 +45,10 @@ Parcellation = 'AAL120';
 % AFTER FILLING IN THE INPUT PARAMETERS:
 % ||||||||||||||||||||||||||||||| CLICK RUN |||||||||||||||||||||||||||||||
 
-%% ANALYSE PL STATE OF INTEREST
+% Add the LEiDA_directory to the matlab path
+addpath(genpath(LEiDA_directory))
+
+%% B: ANALYSE PL STATE OF INTEREST
 
 % Close all open figures
 close all;

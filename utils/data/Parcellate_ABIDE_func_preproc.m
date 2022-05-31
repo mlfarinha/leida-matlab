@@ -11,8 +11,8 @@ function Parcellate_ABIDE_func_preproc(data_dir,info_file,save_dir,parcellation,
 % parcellation  parcellation atlas to be used to parcel the data
 % n_areas       number of areas of the parcellation to consider
 %
-% Author: Joana Cabral, University of Minho, joanacabral@med.uminho.pt
-%         Miguel Farinha, ICVS/2CA-Braga, miguel.farinha@ccabraga.pt
+% Author: Miguel Farinha, University of Minho, miguel.farinha@ccabraga.org
+%         Joana Cabral, University of Minho, joanacabral@med.uminho.pt
 
 % INPUT EXAMPLES:
 % data_dir = 'D:/LEiDA_Toolbox/Outputs/dparsf/nofilt_noglobal/';
@@ -136,9 +136,9 @@ for s = 1:num_subjs
         end
     end
 end
-disp(['Number of participants with tag Control: ' num2str(n_hc)]); % 28 + 19
-disp(['Number of participants with tag Autism: ' num2str(n_ad)]); % 63 + 19
-disp(['Number of participants with tag Aspergers: ' num2str(n_asp)]); % 8 + 0
-disp(['Number of participants with tag PDD-NOS: ' num2str(n_pdd)]); % 15 + 0
-disp(['The maximum number of TRs across participants is: ' num2str(tmax)]); % 235
+disp(['Number of participants with tag Control: ' num2str(n_hc)]); 
+disp(['Number of participants with tag Autism: ' num2str(n_ad)]); 
+disp(['Number of participants with tag Aspergers: ' num2str(n_asp)]); 
+disp(['Number of participants with tag PDD-NOS: ' num2str(n_pdd)]); 
+disp(['The maximum number of TRs across participants is: ' num2str(tmax)]);
 

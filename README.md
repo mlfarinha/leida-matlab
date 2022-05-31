@@ -1,5 +1,7 @@
 # Leading Eigenvector Dynamics Analysis Toolbox - Matlab
 
+This toolbox enables the neuroscience community to apply the Leading Eigenvector Dynamics Analysis (LEiDA) method to functional MRI data with the goal of understanding brain dynamics. Below you can find a set of instructions that will guide the application of this method.
+
 1. [Installation](#installation-of-leida-toolbox)
 2. [LEiDA Start](#leida-start)
 3. [LEiDA Analysis K](#leida-analysis-k)
@@ -11,16 +13,8 @@
 
 ## Installation of LEiDA Toolbox
 
-Start by creating a new folder where all the LEiDA code and analyses will be saved. Then to install the LEiDA Toolbox unzip the folder LEiDA_Functions to the created folder and add that folder (with all its functions) to your Matlab path. In your Matlab command terminal type the following:
-
-`addpath(genpath('my_LEiDA_directory\LEiDA_Functions'))`
-
-If you would like to save the LEiDA_Functions folder to your Matlab path for later use:
-
-1. click *HOME* in your Matlab dashboard;
-2. click *Set Path*;
-3. click *Save* (making sure you see the directory my_LEiDA_directory\LEiDA_Functions in your Matlab search path pop-up window);
-4. click *Close*;
+Start by creating a new folder where all the LEiDA code and analyses will be saved.
+Then to install the LEiDA Toolbox, simply unzip the folder downloaded from [this github repository](https://github.com/PSYCHOMARK/leida-matlab.git).
 
 > Note that the LEiDA Toolbox requires the Statistics and Machine Learning Matlab Toolbox.
 
@@ -36,14 +30,16 @@ Input parameters:
 - ***Data_directory***: directory of the folder with the parcellated fMRI data; this folder does not need to be inside the folder *LEiDA_directory*;
 - ***run_name***: name of the current run to be used to create a folder to save the results from the LEiDA analyses;
 - ***Conditions_tag***: tag of the conditions given in the imaging files; it is expected that the file names of the parcellated data files contain a tag stating the condition to which a given participant belongs to; the tags should correspond exactly to the tags used in the file names; there can be any number of conditions;
-- ***Parcellation***: parcellation template applied to the segment the fMRI data. Available options include 'AAL116', 'AAL120', 'dbs80' and 'glasser360';
+- ***Parcellation***: parcellation template applied to  segment the fMRI data. Available options include 'AAL116', 'AAL120', 'dbs80' and 'glasser360';
 - ***N_areas***: number of brain areas of the parcellation to consider for analysis;
-- ***TR***: TR of the fMRI data;
-- ***Tmax***: maximum number of TRs considering all fMRI sessions;
+- ***TR***: TR of the fMRI data; if unknown use a TR of 1;
+- ***Tmax***: number of TRs considering all fMRI sessions; if different scans have different number of TRs define Tmax as the maximum number of TRs observed across all participants;
 - ***apply_filter***: apply temporal filtering to the parcellated data (0: no; 1: yes);
 - ***flp***: lowpass frequency of filter (default 0.1);
 - ***fhi***: highpass frequency of filter (default 0.01);
-- ***Paired_tests***: experimental paradigm (0: subjects in different conditions are not the same; 1: subjects are the same across conditions);
+- ***Paired_tests***: experimental paradigm: 0 (unpaired) if subjects in different conditions are not the same; or 1 (paired) if subjects are the same across conditions;
+- ***n_permutations***: number of permutations to be performed in hypothesis tests. For the first analysis to be relatively quick, run around 500 permutations, but then increase to 10000 to increase the reliability of the final statistical results (p-values) for publication.
+- ***n_bootstraps***: number of bootstrap samples within each permutation. For the first analysis to be relatively quick, choose around 10, but then increase to 500 for more reliable final results.
 - ***CortexDirection***: direction to plot the PL states/brain ('SideView' or 'TopView').
 
 After filling the input parameters click *Run* on your Matlab dashboard.
@@ -135,6 +131,8 @@ Input parameters:
 - ***SelectK***: define the number of PL states (K) to consider for further analyses;
 - ***LEiDA_directory***: main directory of the LEiDA Toolbox; this should be a folder containing a folder (for example, designated LEiDA_Functions) which contains all the functions available in the toolbox;
 - ***run_name***: name of the current run to be used to create a folder to save the results from the LEiDA analyses;
+- ***n_permutations***: number of permutations to be performed in hypothesis tests. For the first analysis to be relatively quick, run around 500 permutations, but then increase to 10000 to increase the reliability of the final statistical results (p-values) for publication.
+- ***n_bootstraps***: number of bootstrap samples within each permutation. For the first analysis to be relatively quick, choose around 10, but then increase to 500 for more reliable final results.
 
 After filling the input parameters click *Run* on your Matlab dashboard.
 
@@ -164,3 +162,18 @@ Output:
 - Plots the state time courses considering K PL states for all participants and separates them by condition;
 - Plots the state time course for a given subject as cluster blocks;
 - Plots the state time course for a given subject as stairs plot;
+
+---
+
+## References
+
+For more detailed description and applications, please refer to the main reference for LEiDA:
+
+> *Joana Cabral, Diego Vidaurre, Paulo Marques, Ricardo Magalhães, Pedro Silva Moreira, José Miguel Soares, Gustavo Deco, Nuno Sousa and Morten L. Kringelbach (2017) [Cognitive performance in healthy older adults relates to spontaneous switching between states of functional connectivity during rest](https://doi.org/10.1038/s41598-017-05425-7). **Scientific Reports***
+
+An example application to study schizophrenia is shown in
+
+> *Miguel Farinha, Conceição Amado, Pedro Morgado and Joana Cabral (2022) [Increased Excursions to Functional Networks in Schizophrenia in the Absence of Task](https://doi.org/10.3389/fnins.2022.821179). **Frontiers in neuroscience***
+
+
+

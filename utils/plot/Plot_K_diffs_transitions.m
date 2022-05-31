@@ -1,7 +1,7 @@
 function Plot_K_diffs_transitions(data_dir,selectedK)
 %
-% Plot the the results from the hypothesis tests obtained from comparing the
-% mean state-to-state transition probability between conditions
+% Plot the the results from the hypothesis tests obtained from comparing
+% the mean state-to-state transition probability between conditions.
 
 % INPUT:
 % data_dir      directory with the results from running the hypothesis
@@ -13,8 +13,8 @@ function Plot_K_diffs_transitions(data_dir,selectedK)
 %               of the mean state-to-state transition probabilities for 
 %               each pair of conditions
 %
-% Authors: Miguel Farinha, ICVS/2CA-Braga, miguel.farinha@ccabraga.pt
-%          Joana Cabral, Universidade do Minho, joanacabral@med.uminho.pt
+% Authors: Miguel Farinha, University of Minho, miguel.farinha@ccabraga.org
+%          Joana Cabral, University of Minho, joanacabral@med.uminho.pt
 
 % File with results for the fractional occupancy  (output from LEiDA_stats_FracOccup.m)
 file_TM = 'LEiDA_Stats_TransitionMatrix.mat';

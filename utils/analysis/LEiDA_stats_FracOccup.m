@@ -1,31 +1,36 @@
-function LEiDA_stats_FracOccup(data_dir,cond,pair)
+function LEiDA_stats_FracOccup(data_dir,cond,pair,n_permutations,n_bootstraps)
 %
-% For each clustering solution compute the fractional occupancy of each FC
+% For each clustering solution compute the fractional occupancy of each PL
 % state for all subjects. Perform hypothesis tests to check for differences
-% in the probability of occurrence of FC states between conditions.
+% in the probability of occurrence of PL states between conditions.
 %
 % INPUT:
-% data_dir      directory where the LEiDA results are saved
-% cond          tags of each condition considered in the experiment
-% pair          0, different subjects in each condition (default); 1, same
-%               subjects across conditions
+% data_dir        directory where the LEiDA results are saved
+% cond            tags of each condition considered in the experiment
+% pair            0 if different subjects in each condition (default); 
+%                 1 if same subjects across conditions
+% n_permutations  number of permutations performed in hypothesis tests
+% n_bootstraps    number of bootstraps samples within each permutation
+%                 sample used in hypothesis tests
 %
 % OUTPUT:
-% P             fractional occupancy of each FC state in each clustering
+% P             fractional occupancy of each PL state in each clustering
 %               solution for all subjects
 % P_pval2sided  two-sided p-value from testing whether the mean fractional
-%               occupancy of a given FC state differs between conditions
+%               occupancy of a given PL state differs between conditions
 % effectsize    Hedge's effect size
 % levene_pval   p-value obtained from computing the Levene's test on the
 %               fractional occupancy values
 %
-% Author: Joana Cabral, Universidade do Minho, joanacabral@med.uminho.pt
-%         Miguel Farinha, ICVS/2CA-Braga, miguel.farinha@ccabraga.pt
+% Author: Joana Cabral, University of Minho, joanacabral@med.uminho.pt
+%         Miguel Farinha, University of Minho, miguel.farinha@ccabraga.org
+
+
 
 % Default number of permutations
-n_permutations = 10000;
+% n_permutations = 10000;
 % Default number of bootstrap samples within each permutation sample
-n_bootstraps = 500;
+% n_bootstraps = 500;
 
 % File with leading eigenvectors (output from LEiDA_data.m)
 file_V1 = 'LEiDA_EigenVectors.mat';
@@ -120,8 +125,7 @@ end
 %% PERMUTATION STATISTICS WITH WITHIN BOOTSTRAP SAMPLES
 
 disp(' ')
-disp(['Attention: permutation tests take a considerable amount of time to run (' num2str(n_permutations) ' permutations).'])
-disp('Testing intergroup differences in fractional occupancy:')
+disp(['Testing intergroup differences in fractional occupancy using ' num2str(n_permutations) ' permutations:'])
 
 % Store p-values and effect size for K-means clustering solutions
 P_pval = zeros(n_Cond*(n_Cond-1)/2,length(rangeK),rangeK(end));

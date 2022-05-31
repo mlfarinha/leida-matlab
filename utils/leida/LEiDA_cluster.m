@@ -1,8 +1,8 @@
 function [Kmeans_results,rangeK] = LEiDA_cluster(data_dir)
 %
-% Cluster all leading eigenvectors into a set of K clusters
-% using the K-means algorithm. This function considers a range of values of
-% K yielding different clustering solutions.
+% Cluster all leading eigenvectors into a set of K clusters using
+% the K-means algorithm. 
+% This function returns an optimal solution for each values of K.
 %
 % INPUT:
 % data_dir         directory where the LEiDA_EigenVectors file is saved
@@ -11,8 +11,8 @@ function [Kmeans_results,rangeK] = LEiDA_cluster(data_dir)
 % Kmeans_results   clustering solutions for the range of values K
 % rangeK           range of values of K considered for clustering
 %
-% Author: Joana Cabral, Universidade do Minho, joanacabral@med.uminho.pt
-%         Miguel Farinha, ICVS/2CA-Braga, miguel.farinha@ccabraga.pt
+% Author: Joana Cabral, University of Minho, joanacabral@med.uminho.pt
+%         Miguel Farinha, University of Minho, miguel.farinha@ccabraga.org
 
 disp('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% CLUSTERING %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%');
 
@@ -33,7 +33,8 @@ rangeK = mink : maxk;
 Kmeans_results = cell(size(rangeK));
 
 % Number of new initial cluster centroid positions to run
-replicates = 1000;
+% (it is convenient to run more replicates for larger samples)
+replicates = ceil(50 + size(V1_all, 1)/300);
 
 disp(' ');
 disp('Clustering eigenvectors into:')

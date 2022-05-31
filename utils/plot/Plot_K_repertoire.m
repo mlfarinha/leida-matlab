@@ -1,7 +1,7 @@
 function Plot_K_repertoire(data_dir,save_dir,selectedK,parcellation)
 %
 % Plot the centroids in 3D glass brain, in vector format and the boxplots
-% of the fractional occupancy and dwell time value
+% of the fractional occupancy and dwell time value.
 %
 % INPUT:
 % data_dir      directory where LEiDA results are stored
@@ -14,7 +14,7 @@ function Plot_K_repertoire(data_dir,save_dir,selectedK,parcellation)
 %               centroids
 %
 % Authors: Joana Cabral, University of Minho, joanacabral@med.uminho.pt
-%          Miguel Farinha, ICVS/2CA-Braga, miguel.farinha@ccabraga.pt
+%          Miguel Farinha, University of Minho, miguel.farinha@ccabraga.org
 
 % File with the Kmeans results (output from LEiDA_cluster.m)
 file_cluster = 'LEiDA_Clusters.mat';

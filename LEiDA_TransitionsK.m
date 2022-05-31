@@ -6,10 +6,13 @@ function LEiDA_TransitionsK
 %
 % Function to compute the transition probability matrix for each subject
 % and compare the transition probabilities between conditions for a value
-% of K chosen according to the analysis from LEiDA_Start. This function
-% contains two sections: (A) user input parameters; and (B) code to compute
-% the transition probability matrix and intergroup differences in
-% transition probabilities. The user should only need to adapt section A.
+% of K chosen according to the analysis from LEiDA_Start.
+%
+% This function contains two sections:
+%       (A) User defines the parameters and properties of the study.
+%       (B) Compute the transition probability matrix and intergroup 
+%           differences in transition probabilities.
+%       (C) Generate and save figures.
 %
 % Start by reading the README.md file.
 %
@@ -17,15 +20,16 @@ function LEiDA_TransitionsK
 % B: Analysis for selected K:
 %    - Compute Transition Probability Matrix (TPM) for each participant
 %    - Compare state-to-state transition probabilities between conditions
+% C: Figures
 %    - Plot the mean TPM for each condition
 %    - Plot the intergroup differences between transition probabilties
 %
 % Tutorial: README.md
-% Version:  V1.0, May 2022
-% Authors:  Joana Cabral, Universidade do Minho, joanacabral@med.uminho.pt
-%           Miguel Farinha, ICVS/2CA-Braga, miguel.farinha@ccabraga.pt
+% Version:  V1.0, June 2022
+% Authors:  Joana Cabral, University of Minho, joanacabral@med.uminho.pt
+%           Miguel Farinha, University of Minho, miguel.farinha@ccabraga.org
 
-%% A: USER INPUT PARAMETERS
+%% A: STUDY PARAMETERS
 
 % Define K value, i.e., K returning the most significant differences between conditions:
 SelectK = 15;
@@ -35,10 +39,23 @@ LEiDA_directory = 'D:/LEiDA_Toolbox/';
 % Name of the run to be used to create the folder to save the data:
 run_name = 'ABIDE_dparsf_AAL120';
 
+% For the statistics:
+% Number of permutations. For the first analysis to be relatively quick,
+% run around 500 permutations, but then increase to 10000 to increase the
+% reliability of the final statistical results (p-values) for publication.
+n_permutations = 500;
+% Number of bootstrap samples within each permutation. For the first
+% analysis to be relatively quick, choose around 10, but then increase to
+% 500 for more reliable final results.
+n_bootstraps = 10;
+
 % AFTER FILLING IN THE INPUT PARAMETERS:
 % ||||||||||||||||||||||||||||||| CLICK RUN |||||||||||||||||||||||||||||||
 
-%% COMPUTE TPM AND ANALYSE INTERGROUP DIFFERENCES IN TRANSITION PROBABILITIES FOR SELECTED K
+% Add the LEiDA_directory to the matlab path
+addpath(genpath(LEiDA_directory))
+
+%% B: COMPUTE TPM AND ANALYSE INTERGROUP DIFFERENCES IN TRANSITION PROBABILITIES FOR SELECTED K
 
 % Close all open figures
 close all;
@@ -59,10 +76,12 @@ disp(' ')
 disp(['%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TRANSITIONS FOR K = ' num2str(SelectK) ' CLUSTERS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%'])
 
 % Compute the transition probability matrix and perform hypothesis tests
-% LEiDA_stats_TransitionMatrix(leida_res,K_dir,SelectK);
+LEiDA_stats_TransitionMatrix(leida_res,K_dir,SelectK,n_permutations,n_bootstraps);
+
+%% C: MAKE FIGURES
 
 % Plot the mean transition probability matrix
-% Plot_K_tpm(K_dir,SelectK);
+Plot_K_tpm(K_dir,SelectK);
 
 % Plot summary of differences in transition probabilities between conditions
 Plot_K_diffs_transitions(K_dir,SelectK);

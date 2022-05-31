@@ -24,7 +24,7 @@ function [stats] = bootstrap_within_permutation_ttest2(data,design,niter,nboot,p
 % estimated over 200 points if nboot<=5000, otherwise it is estimated over
 % round(200*nboot/5000) points, for greater precision.
 %
-%  Miguel Farinha November 2021
+%  Miguel Farinha November 2021 (miguel.farinha@ccabraga.org)
 %  adapted from: Enrico Glerean 2013 and Henrique Fernandes 2014
 %
 % NOTES:

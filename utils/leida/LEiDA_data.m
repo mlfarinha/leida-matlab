@@ -25,7 +25,7 @@ function [V1_all,Time_sessions,Data_info] = LEiDA_data(data_dir,save_dir,n_areas
 % Data_info      parcellated data
 %
 % Author: Joana Cabral, University of Minho, joanacabral@med.uminho.pt
-%         Miguel Farinha, ICVS/2CA-Braga, miguel.farinha@ccabraga.pt
+%         Miguel Farinha, University of Minho, miguel.farinha@ccabraga.org
 
 disp('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LEADING EIGENVECTORS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%');
 disp(' ')

@@ -13,7 +13,7 @@ function Plot_subj_stairs(data_dir,save_dir,selectedK,subj)
 % .fig/.png     Plot of the state time course for a given value of K and
 %               subject as a stairs plot
 %
-% Authors: Miguel Farinha, ICVS/2CA-Braga, miguel.farinha@ccabraga.pt
+% Authors: Miguel Farinha, University of Minho, miguel.farinha@ccabraga.org
 %          Joana Cabral, University of Minho, joanacabral@med.uminho.pt
 
 % File with leading eigenvectors (output from LEiDA_data.m)

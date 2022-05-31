@@ -1,8 +1,8 @@
 function cluster_performance(data_dir)
 %
-% Compute the Dunn's index, Calinski-Harabasz (CH) index and
-% average Silhouette coefficient for each value of K to
-% assess clustering performance.
+% Compute the Dunn's index, Calinski-Harabasz (CH) index and average 
+% Silhouette coefficient for each value of K to assess clustering
+% performance.
 %
 % INPUT:
 % data_dir      directory where the results from K-means are saved
@@ -14,7 +14,7 @@ function cluster_performance(data_dir)
 % .fig/.png     plot of the Dunn's index, average Silhouette
 %               coefficient and CH index for each number of clusters
 %
-% Author: Miguel Farinha, ICVS/2CA-Braga, miguel.farinha@ccabraga.pt
+% Author: Miguel Farinha, University of Minho, miguel.farinha@ccabraga.org
 %         Joana Cabral, University of Minho, joanacabral@med.uminho.pt
 
 % Input example:

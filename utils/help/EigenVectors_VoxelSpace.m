@@ -16,8 +16,8 @@ function EigenVectors_VoxelSpace(data_dir,save_dir,leida_dir,selectedK)
 % mean_V1       mean leading eigenvectors based on the time courses of PL
 %               states obtained from running the K-means algorithm
 %
-% Author: Joana Cabral, Universidade do Minho, joanacabral@med.uminho.pt
-%         Miguel Farinha, ICVS/2CA-Braga, miguel.farinha@ccabraga.pt
+% Author: Joana Cabral, University of Minho, joanacabral@med.uminho.pt
+%         Miguel Farinha, University of Minho, miguel.farinha@ccabraga.org
 
 % INPUT EXAMPLES:
 % data_dir = 'D:/LEiDA_Toolbox/Outputs/dparsf/nofilt_noglobal/func_preproc/';

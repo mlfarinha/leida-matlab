@@ -29,9 +29,8 @@ function [stats] = bootstrap_within_permutation_paired_samples(data,design,niter
 % estimated over 200 points if niter<=5000, otherwise it is estimated over
 % round(200*niter/5000) points, for greater precision.
 
-%  Miguel Farinha January 2022
-%  adapted from: Enrico Glerean 2013, Henrique Fernandes 2014 &
-%  line 117 modified by C.A. Figueroa and J. Cabral in December 2017
+%  Miguel Farinha January 2022 (miguel.farinha@ccabraga.org)
+%  adapted from: Enrico Glerean 2013 and Henrique Fernandes 2014
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % INPUT VALIDATION

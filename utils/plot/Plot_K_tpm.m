@@ -1,6 +1,6 @@
 function Plot_K_tpm(data_dir,selectedK)
 %
-% Plot the mean transition probability matrices for each condition
+% Plot the mean transition probability matrices for each condition.
 %
 % INPUT:
 % data_dir      directory with the results from running the hypothesis
@@ -10,8 +10,8 @@ function Plot_K_tpm(data_dir,selectedK)
 % OUTPUT:
 % .fig/.png     plot of the estimated mean TPM for each condition
 %
-% Authors: Joana Cabral, Universidade do Minho, joanacabral@med.uminho.pt
-%          Miguel Farinha, ICVS/2CA-Braga, miguel.farinha@ccabraga.pt
+% Authors: Joana Cabral, University of Minho, joanacabral@med.uminho.pt
+%          Miguel Farinha, University of Minho, miguel.farinha@ccabraga.org
 
 % File with results for the transition probabilities (output from LEiDA_stats_TransitionMatrix.m)
 file_TM = 'LEiDA_Stats_TransitionMatrix.mat';

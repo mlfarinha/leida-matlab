@@ -11,7 +11,7 @@ function Plot_K_V1_VoxelSpace_Slice(leida_dir,selectedK)
 %               space
 %
 % Authors: Joana Cabral, University of Minho, joanacabral@med.uminho.pt
-%          Miguel Farinha, ICVS/2CA-Braga, miguel.farinha@ccabraga.pt
+%          Miguel Farinha, University of Minho, miguel.farinha@ccabraga.org
 
 % INPUT EXAMPLES:
 % leida_dir = 'D:/LEiDA_Toolbox/LEiDA_Results_ABIDE_dparsf_AAL120/';

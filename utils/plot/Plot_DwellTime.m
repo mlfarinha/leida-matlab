@@ -19,8 +19,8 @@ function Plot_DwellTime(data_dir)
 %               comparison of the mean dwell time of FC states for each
 %               pair of conditions
 %
-% Authors: Joana Cabral, Universidade do Minho, joanacabral@med.uminho.pt
-%          Miguel Farinha, ICVS/2CA-Braga, miguel.farinha@ccabraga.pt
+% Authors: Joana Cabral, University of Minho, joanacabral@med.uminho.pt
+%          Miguel Farinha, University of Minho, miguel.farinha@ccabraga.org
 
 % File with results for the dwell time (output from LEiDA_stats_DwellTime.m)
 file_LT = 'LEiDA_Stats_DwellTime.mat';
@@ -215,10 +215,10 @@ for s_ind = 1:length(subplot_indices)
     % Subplot adds plots following the rows (not the columns)
     subplot(size(subplot_map,1),size(subplot_map,2),index_fig(subplot_ind))
     
-    yline(0.8,'b--','LineWidth',1.5);
+    plot(rangeK(1)-1:rangeK(end)+1,0.8*ones(1,length(rangeK)+2),'b--','LineWidth',1.5);
     hold on;
-    yline(0.5,'g--','LineWidth',1.5);
-    yline(0.2,'r--','LineWidth',1.5);
+    plot(rangeK(1)-1:rangeK(end)+1,0.5*ones(1,length(rangeK)+2),'g--','LineWidth',1.5);
+    plot(rangeK(1)-1:rangeK(end)+1,0.2*ones(1,length(rangeK)+2),'r--','LineWidth',1.5);
     
     for k = 1:length(rangeK)
         for c = 1:rangeK(k)

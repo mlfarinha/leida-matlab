@@ -1,7 +1,7 @@
 function append_tag(data_dir,info_file,tag_col,save_dir)
 %
-% Append the condition tag of each participant to the filename to
-% enable running the script LEiDA_Master.
+% Example script to append the condition tag of each participant to the
+% filename to % enable running the script LEiDA_Start.
 %
 % INPUT:
 % data_dir      directory where data files are stored
@@ -10,7 +10,7 @@ function append_tag(data_dir,info_file,tag_col,save_dir)
 %               each participant
 % save_dir      directory to save the new data
 %
-% Author: Miguel Farinha, ICVS/2CA-Braga, miguel.farinha@ccabraga.pt
+% Author: Miguel Farinha, University of Minho, miguel.farinha@ccabraga.org
 
 % Input examples:
 % data_dir = 'D:\LEiDA_Toolbox\Outputs\niak\nofilt_noglobal\rois_aal\';

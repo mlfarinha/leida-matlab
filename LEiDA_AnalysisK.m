@@ -6,9 +6,11 @@ function LEiDA_AnalysisK
 %
 % Function to analyse the PL states chosen according to the analysis from
 % LEiDA_Start. The user should select a value for K and this function will
-% return summary plots of the set of PL states. This function contains two
-% sections: (A) user input parameters; and (B) code to plot the figures for
-% the select K. The user should only need to adapt section A.
+% return summary plots of the set of PL states.
+%
+% This function contains two sections: 
+%       (A) User defines the parameters and selects the value of K.
+%       (B) Generate and save figures.
 %
 % Start by reading the README.md file.
 %
@@ -25,9 +27,9 @@ function LEiDA_AnalysisK
 %    - Plot overlap of PL states with RSNs defined by Yeo et al., (2011)
 %
 % Tutorial: README.md
-% Version:  V1.0, May 2022
-% Authors:  Joana Cabral, Universidade do Minho, joanacabral@med.uminho.pt
-%           Miguel Farinha, ICVS/2CA-Braga, miguel.farinha@ccabraga.pt
+% Version:  V1.0, June 2022
+% Authors:  Joana Cabral, University of Minho, joanacabral@med.uminho.pt
+%           Miguel Farinha, University of Minho, miguel.farinha@ccabraga.org
 
 %% A: USER INPUT PARAMETERS
 
@@ -41,10 +43,14 @@ run_name = 'ABIDE_dparsf_AAL120';
 % Parcellation used to run LEiDA_Start script:
 Parcellation = 'AAL120';
 
+
 % AFTER FILLING IN THE INPUT PARAMETERS:
 % ||||||||||||||||||||||||||||||| CLICK RUN |||||||||||||||||||||||||||||||
 
-%% ANALYSE K CENTROIDS SELECTED ACCORDING TO OUTPUT FROM LEiDA_Start
+% Add the LEiDA_directory to the matlab path
+addpath(genpath(LEiDA_directory))
+
+%% B: ANALYSE K CENTROIDS SELECTED ACCORDING TO OUTPUT FROM LEiDA_Start
 
 % Close all open figures
 close all;

@@ -1,7 +1,7 @@
 function Plot_K_state_time(data_dir,save_dir,selectedK)
 %
 % Plot the state time courses for all participants and make pie plots with
-% the percentage of time spent in each state
+% the percentage of time spent in each state.
 %
 % INPUT:
 % data_dir      directory where LEiDA results are stored
@@ -12,7 +12,7 @@ function Plot_K_state_time(data_dir,save_dir,selectedK)
 % .fig/.png     Plot of the state time courses for all subjects by
 %               condition with pie plots of fractional occupancy of states
 %
-% Authors: Miguel Farinha, ICVS/2CA-Braga, miguel.farinha@ccabraga.pt
+% Authors: Miguel Farinha, University of Minho, miguel.farinha@ccabraga.org
 %          Joana Cabral, University of Minho, joanacabral@med.uminho.pt
 
 % File with leading eigenvectors (output from LEiDA_data.m)

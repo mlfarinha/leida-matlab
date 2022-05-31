@@ -10,14 +10,17 @@ function cluster_stability(data_dir,save_dir,selectedK)
 % selectedK     number of clusters
 %
 % OUTPUT:
-% 
+% ConfMat_fold  confusion matrix for each fold
+% acc           accuracy computed from the confusion matrix
+% VI_fold       variation of information
+% rand_fold     adjusted rand index
+% figure        tables with cluster stability results
 %
-% Author: Miguel Farinha, ICVS/2CA-Braga, miguel.farinha@ccabraga.pt
-
+% Author: Miguel Farinha, University of Minho, miguel.farinha@ccabraga.org
 % Input examples:
-% data_dir = 'D:/LEiDA_Toolbox/LEiDA_results/';
-% save_dir = 'D:/LEiDA_Toolbox/LEiDA_results/K8/';
-% selectedK = 8;
+% data_dir = 'D:/LEiDA_Toolbox/LEiDA_Results_ABIDE_dparsf_AAL120/';
+% save_dir = 'D:/LEiDA_Toolbox/LEiDA_Results_ABIDE_dparsf_AAL120/K15/';
+% selectedK = 15;
 
 % File with leading eigenvectors (output from LEiDA_data.m)
 file_V1 = 'LEiDA_EigenVectors.mat';

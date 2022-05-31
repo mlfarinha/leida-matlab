@@ -6,9 +6,12 @@ function LEiDA_StateTime
 %
 % Function to plot the state time courses for all participants and plot the
 % state time courses for a specific subject. The user should select a value
-% for K and a subject to analyse. This function contains two sections: (A)
-% user input parameters; and (B) code to plot the state time curses for the
-% select K and subject. The user should only need to adapt section A.
+% for K and a subject to analyse.
+%
+% This function contains two sections:
+%       (A) User defines the parameters and selects the value of K.
+%       (B) Generate and save figures of the state time curses for the
+%           selected K and subject.
 %
 % Start by reading the README.md file.
 %
@@ -19,9 +22,9 @@ function LEiDA_StateTime
 %    - Plot cluster stairs for specific subject
 %
 % Tutorial: README.md
-% Version:  V1.0, May 2022
-% Authors:  Joana Cabral, Universidade do Minho, joanacabral@med.uminho.pt
-%           Miguel Farinha, ICVS/2CA-Braga, miguel.farinha@ccabraga.pt
+% Version:  V1.0, June 2022
+% Authors:  Joana Cabral, University of Minho, joanacabral@med.uminho.pt
+%           Miguel Farinha, University of Minho, miguel.farinha@ccabraga.org
 
 %% A: USER INPUT PARAMETERS
 
@@ -38,6 +41,9 @@ run_name = 'ABIDE_dparsf_AAL120';
 
 % AFTER FILLING IN THE INPUT PARAMETERS:
 % ||||||||||||||||||||||||||||||| CLICK RUN |||||||||||||||||||||||||||||||
+
+% Add the LEiDA_directory to the matlab path
+addpath(genpath(LEiDA_directory))
 
 %% ANALYSE K CENTROIDS SELECTED ACCORDING TO OUTPUT FROM LEiDA_Start
 

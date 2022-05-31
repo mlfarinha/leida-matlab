@@ -9,15 +9,15 @@ function Plot_Centroid_Pyramid(data_dir,cond,parcellation,n_areas,cortex_dir)
 % cond          tags of each condition considered in the experiment
 % parcellation  parcellation used to segment the brain
 % n_areas       number of areas of the parcellation to be considered
-% cortex_dir    direction of observation of the rendering of the FC states
+% cortex_dir    direction of observation of the rendering of the PL states
 %
 % OUTPUT:
-% Fig           FC states rendered on a transparent cortex with their
+% Fig           PL states rendered on a transparent cortex with their
 %               corresponding overlap with the resting-state networks
-%               defined by Yeo et al., 2011
+%               defined by Yeo et al., (2011)
 %
-% Authors: Joana Cabral, Universidade do Minho, joanacabral@med.uminho.pt
-%          Miguel Farinha, ICVS/2CA-Braga, miguel.farinha@ccabraga.pt
+% Authors: Joana Cabral, University of Minho, joanacabral@med.uminho.pt
+%          Miguel Farinha, University of Minho, miguel.farinha@ccabraga.org
 
 % File with results for the dwell time (output from LEiDA_stats_DwellTime.m)
 file_clusters = 'LEiDA_Clusters.mat';

@@ -1,12 +1,12 @@
 function [cc_V_yeo7,p_V_yeo7] = Overlap_LEiDA_Yeo(parcellation,n_areas,centroids,rangeK)
 %
 % Function to calculate overlap between LEiDA K-means results obtained in
-% Glasser, DBS80 or AAL parcellation with the 7 resting-state Networks
-% from Yeo et al. 2011
+% Glasser, DBS80, AAL116 or AAL120 parcellation with the 7 Resting State
+% Networks from Yeo et al. 2011
 %
 % INPUT:
 % parcellation  parcellation used to segment the brain ('AAL116' or
-%               'glasser378' or 'dbs80')
+%               'AAL120' or 'glasser378' or 'dbs80')
 % n_areas       number of areas of the parcellation to consider
 % centroids     centroids obtained from applying K-means
 % rangeK        range of clustering solutions considered for analysis
@@ -19,10 +19,11 @@ function [cc_V_yeo7,p_V_yeo7] = Overlap_LEiDA_Yeo(parcellation,n_areas,centroids
 %  nor the cerebellum (so LEiDA results obtained including these strucutres 
 %  it may make sence to compute the overlap removing these areas.
 %  i.e. in AALl116 compare only the first 90
+%  i.e. in AAL120 compare only the first 94 
 %  i.e. in glasser378 compare only the first 360 
 %
-% Author: Joana Cabral, Universidade do Minho, joanacabral@med.uminho.pt
-%         Miguel Farinha, ICVS/2CA-Braga, miguel.farinha@ccabraga.pt
+% Author: Joana Cabral, University of Minho, joanacabral@med.uminho.pt
+%         Miguel Farinha, University of Minho, miguel.farinha@ccabraga.org
 
 
 % 1) Define the Yeo Networks in the new Parcellation

@@ -1,33 +1,37 @@
-function LEiDA_stats_TransitionMatrix(data_dir,save_dir,selectedK)
+function LEiDA_stats_TransitionMatrix(data_dir,save_dir,selectedK,n_permutations,n_bootstraps)
 %
 % For the selected K compute the transition probability matrix for each
 % participant. Perform hypothesis tests to check for differences in the
 % state-to-state transition probabilities between conditions.
 %
 % INPUT:
-% data_dir       directory where the LEiDA results are saved
-% save_dir       directory to save the results from the hypothesis tests
-%                of the comparison of the mean transition probabilities for
-%                the selected K
-% selectedK      K defined by the user
+% data_dir        directory where the LEiDA results are saved
+% save_dir        directory to save the results from the hypothesis tests
+%                 of the comparison of the mean transition probabilities for
+%                 the selected K
+% selectedK       K defined by the user
+% n_permutations  number of permutations performed in hypothesis tests
+% n_bootstraps    number of bootstraps samples within each permutation
+%                 sample used in hypothesis tests
 %
 % OUTPUT:
-% TM             transition matrix for optimal K for all participants
-% TMnorm         transition probability matrix (TPM) for optimal K for all
-%                participants
-% TM_pval2sided  two-sided p-value from testing whether the mean transition
-%                probability of a given FC state differs between conditions      
-% effectsize    Hedge's effect size
-% levene_pval   p-value obtained from computing the Levene's test on the
-%               state-to-state transition probability values
+% TM              transition matrix for optimal K for all participants
+% TMnorm          transition probability matrix (TPM) for optimal K for all
+%                 participants
+% TM_pval2sided   two-sided p-value from testing whether the mean transition
+%                 probability of a given FC state differs between conditions      
+% effectsize      Hedge's effect size
+% levene_pval     p-value obtained from computing the Levene's test on the
+%                 state-to-state transition probability values
 %
 % Author: Joana Cabral, University of Minho, joanacabral@med.uminho.pt
-%         Miguel Farinha, ICVS/2CA-Braga, miguel.farinha@ccabraga.pt
+%         Miguel Farinha, University of Minho, miguel.farinha@ccabraga.org
+
 
 % Default number of permutations
-n_permutations = 10000;
+% n_permutations = 10000;
 % Default number of bootstrap samples within each permutation sample
-n_bootstraps = 500;
+% n_bootstraps = 500;
 
 % File with leading eigenvectors (output from LEiDA_data.m)
 file_V1 = 'LEiDA_EigenVectors.mat';
@@ -131,8 +135,7 @@ end
 %%  PERMUTATION STATISTICS WITH WITHIN BOOTSTRAP SAMPLES
 
 disp(' ')
-disp(['Attention: permutation tests take a considerable amount of time to run (' num2str(n_permutations) ' permutations).'])
-disp('Testing intergroup differences in transition probabilities:')
+disp(['Testing intergroup differences in transition probabilities using ' num2str(n_permutations) ' permutations:'])
 
 % Store p-values and effect size
 TM_pval = zeros(n_Cond*(n_Cond-1)/2,selectedK,selectedK);

@@ -14,7 +14,7 @@ function Plot_C_boxplot_FO(data_dir,save_dir,selectedK,centroid,parcellation)
 % .fig/.png     Boxplot of the fractional occupancy values for each
 %               condition for the selected centroid
 %
-% Authors: Miguel Farinha, ICVS/2CA-Braga, miguel.farinha@ccabraga.pt
+% Authors: Miguel Farinha, University of Minho, miguel.farinha@ccabraga.org
 %          Joana Cabral, University of Minho, joanacabral@med.uminho.pt
 
 % File with the Kmeans results (output from LEiDA_cluster.m)
